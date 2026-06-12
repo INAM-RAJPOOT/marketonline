@@ -1,0 +1,35 @@
+{% comment %}
+  Renders country/region selector.
+  Accepts:
+  - class_prefix: {String} CSS class prefix (optional, default 'localization')
+{% endcomment %}
+
+{%- liquid
+  assign prefix = class_prefix | default: 'localization'
+-%}
+
+{%- if localization.available_countries.size > 1 -%}
+  <div class="{{ prefix }}__country">
+    {%- form 'localization', class: 'localization__form' -%}
+      <label class="visually-hidden" for="country-selector-{{ prefix }}">
+        {{ 'localization.country_label' | t }}
+      </label>
+      <select
+        id="country-selector-{{ prefix }}"
+        class="{{ prefix }}__select"
+        name="country_code"
+        aria-label="{{ 'localization.country_label' | t }}"
+        onchange="this.form.submit()"
+      >
+        {%- for country in localization.available_countries -%}
+          <option
+            value="{{ country.iso_code }}"
+            {% if country.iso_code == localization.country.iso_code %}selected{% endif %}
+          >
+            {{ country.name }} ({{ country.currency.iso_code }})
+          </option>
+        {%- endfor -%}
+      </select>
+    {%- endform -%}
+  </div>
+{%- endif -%}

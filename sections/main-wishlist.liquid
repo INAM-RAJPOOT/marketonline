@@ -1,0 +1,104 @@
+<section
+  class="wishlist section-spacing"
+  id="shopify-section-{{ section.id }}"
+  data-wishlist-page
+>
+  <div class="page-width">
+    {% render 'breadcrumbs' %}
+    <h1 class="wishlist__title">
+      {%- if section.settings.heading != blank -%}
+        {{ section.settings.heading }}
+      {%- else -%}
+        {{ 'wishlist.title' | t }}
+      {%- endif -%}
+    </h1>
+
+    <div class="wishlist__empty" data-wishlist-empty hidden>
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+      </svg>
+      <h2 class="wishlist__empty-title">{{ 'wishlist.empty' | t }}</h2>
+      <p class="wishlist__empty-text">{{ 'wishlist.empty_text' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+        {{ 'wishlist.continue_shopping' | t }}
+      </a>
+    </div>
+
+    <ul class="wishlist__grid list-unstyled" data-wishlist-grid role="list"></ul>
+  </div>
+</section>
+
+<style>
+  .wishlist__title {
+    font-size: clamp(2.8rem, 4vw, 4rem);
+    margin: 0 0 3rem;
+  }
+
+  .wishlist__empty {
+    text-align: center;
+    padding: 6rem 2rem;
+    color: rgba(var(--color-base-text-1), 0.6);
+  }
+
+  .wishlist__empty svg {
+    margin-bottom: 2rem;
+    opacity: 0.4;
+  }
+
+  .wishlist__empty-title {
+    font-size: 2rem;
+    margin: 0 0 1rem;
+    color: rgb(var(--color-base-text-1));
+  }
+
+  .wishlist__empty-text {
+    font-size: 1.5rem;
+    margin: 0 0 2.4rem;
+  }
+
+  .wishlist__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: 2.4rem;
+  }
+
+  .wishlist__loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.5rem;
+    color: rgba(var(--color-base-text-1), 0.6);
+    padding: 4rem 0;
+  }
+
+  @media (max-width: 990px) {
+    .wishlist__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 576px) {
+    .wishlist__grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "My wishlist"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

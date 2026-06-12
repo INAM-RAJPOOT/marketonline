@@ -1,0 +1,142 @@
+<section class="logo-list section-spacing color-scheme-{{ section.settings.color_scheme }}" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="logo-list__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <ul class="logo-list__grid list-unstyled" role="list">
+      {%- for block in section.blocks -%}
+        <li class="logo-list__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="logo-list__link" {% if block.settings.link contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}>
+          {%- endif -%}
+            {%- if block.settings.image != blank -%}
+              {%- assign logo_alt = block.settings.image.alt | default: block.settings.heading | escape -%}
+              {{
+                block.settings.image
+                | image_url: width: 300
+                | image_tag: loading: 'lazy', class: 'logo-list__image', alt: logo_alt, width: 300
+              }}
+            {%- else -%}
+              <span class="logo-list__placeholder">{{ block.settings.heading | default: 'Logo' }}</span>
+            {%- endif -%}
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .logo-list__heading {
+    text-align: center;
+    font-size: clamp(1.4rem, 2vw, 1.6rem);
+    font-weight: var(--font-body-weight-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(var(--color-base-text-1), 0.6);
+    margin: 0 0 3rem;
+  }
+
+  .logo-list__grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem 4rem;
+  }
+
+  .logo-list__link {
+    display: block;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+  }
+
+  .logo-list__link:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+
+  .logo-list__image {
+    max-height: 4.8rem;
+    width: auto;
+    max-width: 14rem;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: filter 0.2s ease;
+  }
+
+  .logo-list__link:hover .logo-list__image {
+    filter: grayscale(0%);
+  }
+
+  .logo-list__placeholder {
+    font-size: 1.4rem;
+    font-weight: var(--font-body-weight-bold);
+    color: rgba(var(--color-base-text-1), 0.4);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Logo list",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "As seen in"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "1", "label": "Light" },
+        { "value": "2", "label": "Soft" },
+        { "value": "3", "label": "Dark" },
+        { "value": "4", "label": "Accent" }
+      ],
+      "default": "2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Title",
+          "info": "Used if no image is set"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo list",
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

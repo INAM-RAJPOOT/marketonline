@@ -1,0 +1,188 @@
+<section class="newsletter section-spacing color-scheme-{{ section.settings.color_scheme }}" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="newsletter__inner">
+      <div class="newsletter__content">
+        {%- if section.settings.subheading != blank -%}
+          <p class="newsletter__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="newsletter__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="newsletter__text">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+
+      {% form 'customer', class: 'newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+
+        <div class="newsletter__field">
+          <label class="visually-hidden" for="NewsletterEmail-{{ section.id }}">
+            {{ 'sections.newsletter.email_label' | t }}
+          </label>
+          <input
+            type="email"
+            id="NewsletterEmail-{{ section.id }}"
+            name="contact[email]"
+            class="newsletter__input"
+            value="{{ form.email }}"
+            placeholder="{{ section.settings.placeholder | default: 'Enter your email' }}"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            required
+            aria-required="true"
+          >
+          <button type="submit" class="button button--primary newsletter__button" name="commit">
+            {{ section.settings.button_label | default: 'Subscribe' }}
+          </button>
+        </div>
+
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter__message newsletter__message--success" role="status">
+            {{ 'sections.newsletter.success' | t }}
+          </p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <p class="newsletter__message newsletter__message--error" role="alert">
+            {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+          </p>
+        {%- endif -%}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .newsletter__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .newsletter__subheading {
+    font-size: 1.3rem;
+    font-weight: var(--font-body-weight-bold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin: 0 0 1.2rem;
+  }
+
+  .newsletter__heading {
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    margin: 0 0 1.6rem;
+  }
+
+  .newsletter__text {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    margin: 0 0 3rem;
+  }
+
+  .newsletter__field {
+    display: flex;
+    gap: 1rem;
+    max-width: 52rem;
+    margin: 0 auto;
+  }
+
+  .newsletter__input {
+    flex: 1;
+    min-width: 0;
+    padding: 1.4rem 1.8rem;
+    font-size: 1.5rem;
+    font-family: var(--font-body-family);
+    border: 2px solid rgba(var(--color-base-text-1), 0.2);
+    border-radius: var(--buttons-radius);
+    background: rgb(var(--color-base-background-1));
+    color: rgb(var(--color-base-text-1));
+  }
+
+  .newsletter__input:focus {
+    outline: none;
+    border-color: rgb(var(--color-base-accent-1));
+  }
+
+  .newsletter__button {
+    flex-shrink: 0;
+  }
+
+  .newsletter__message {
+    margin: 1.6rem 0 0;
+    font-size: 1.4rem;
+  }
+
+  .newsletter__message--success {
+    color: #1a7f37;
+  }
+
+  .newsletter__message--error {
+    color: #CC0000;
+  }
+
+  @media (max-width: 576px) {
+    .newsletter__field {
+      flex-direction: column;
+    }
+    .newsletter__button { width: 100%; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Stay in the loop"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get 10% off your first order"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Join our list for exclusive deals, new arrivals, and insider-only discounts."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "1", "label": "Scheme 1" },
+        { "value": "2", "label": "Scheme 2" },
+        { "value": "3", "label": "Scheme 3" },
+        { "value": "4", "label": "Scheme 4" }
+      ],
+      "default": "3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

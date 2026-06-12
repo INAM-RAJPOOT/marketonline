@@ -1,0 +1,19 @@
+mutation CreateWishlistPage {
+  pageCreate(
+    page: {
+      title: "Wishlist"
+      handle: "wishlist"
+      templateSuffix: "wishlist"
+      body: "<p>Save your favorite products and come back anytime.</p>"
+    }
+  ) {
+    page {
+      id
+      handle
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<section class="customer section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="customer__header">
+      <h1 class="customer__title">{{ 'customers.register.title' | t }}</h1>
+      <p class="customer__subtitle">
+        {{ 'customers.register.subtitle' | t }}
+        <a href="{{ routes.account_login_url }}" class="customer__link">{{ 'customers.register.sign_in' | t }}</a>
+      </p>
+    </div>
+
+    <div class="customer__card">
+      {%- form 'create_customer', novalidate: 'novalidate', class: 'customer__form' -%}
+        {%- if form.errors -%}
+          <div class="customer__errors" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="customer__field">
+          <label for="register-first-name">{{ 'customers.register.first_name' | t }}</label>
+          <input
+            type="text"
+            id="register-first-name"
+            name="customer[first_name]"
+            class="customer__input"
+            autocomplete="given-name"
+            required
+            {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+          >
+        </div>
+
+        <div class="customer__field">
+          <label for="register-last-name">{{ 'customers.register.last_name' | t }}</label>
+          <input
+            type="text"
+            id="register-last-name"
+            name="customer[last_name]"
+            class="customer__input"
+            autocomplete="family-name"
+            required
+            {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+          >
+        </div>
+
+        <div class="customer__field">
+          <label for="register-email">{{ 'customers.login.email' | t }}</label>
+          <input
+            type="email"
+            id="register-email"
+            name="customer[email]"
+            class="customer__input"
+            autocomplete="email"
+            required
+            {% if form.email %}value="{{ form.email }}"{% endif %}
+          >
+        </div>
+
+        <div class="customer__field">
+          <label for="register-password">{{ 'customers.login.password' | t }}</label>
+          <input
+            type="password"
+            id="register-password"
+            name="customer[password]"
+            class="customer__input"
+            autocomplete="new-password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="button button--primary">{{ 'customers.register.submit' | t }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer register",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

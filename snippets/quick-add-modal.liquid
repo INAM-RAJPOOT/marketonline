@@ -1,0 +1,31 @@
+<div
+  id="quick-add-modal"
+  class="quick-add-modal"
+  aria-hidden="true"
+>
+  <div class="quick-add-modal__overlay" data-quick-add-close tabindex="-1"></div>
+
+  <div
+    class="quick-add-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'products.quick_add' | t }}"
+  >
+    <button
+      type="button"
+      class="quick-add-modal__close"
+      data-quick-add-close
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="quick-add-modal__content" id="quick-add-modal-content">
+      <div class="quick-add-modal__loading">
+        <span class="loading-spinner" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</div>

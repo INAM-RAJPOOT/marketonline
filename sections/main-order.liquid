@@ -1,0 +1,109 @@
+<section class="customer section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="customer__header">
+      <h1 class="customer__title">{{ 'customers.order.title' | t: name: order.name }}</h1>
+      <p class="customer__subtitle">
+        {{ 'customers.order.date' | t: date: order.created_at | date: format: 'date' }}
+      </p>
+    </div>
+
+    <div class="customer__grid">
+      {% render 'customer-nav' %}
+
+      <div class="customer__content">
+        <div class="customer__card">
+          <div class="customer__order-items">
+            {%- for line_item in order.line_items -%}
+              <div class="customer__order-item">
+                {%- if line_item.image -%}
+                  <img
+                    src="{{ line_item.image | image_url: width: 160 }}"
+                    alt="{{ line_item.title | escape }}"
+                    class="customer__order-item-image"
+                    width="80"
+                    height="80"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'customer__order-item-image' }}
+                {%- endif -%}
+
+                <div>
+                  <p style="font-weight: var(--font-body-weight-bold); margin: 0 0 0.4rem;">
+                    {%- if line_item.url -%}
+                      <a href="{{ line_item.url }}" class="customer__link">{{ line_item.title }}</a>
+                    {%- else -%}
+                      {{ line_item.title }}
+                    {%- endif -%}
+                  </p>
+                  {%- unless line_item.variant.title == 'Default Title' -%}
+                    <p class="customer__subtitle" style="margin: 0;">{{ line_item.variant.title }}</p>
+                  {%- endunless -%}
+                  <p class="customer__subtitle" style="margin: 0.4rem 0 0;">
+                    {{ 'customers.order.quantity' | t: quantity: line_item.quantity }}
+                  </p>
+                </div>
+
+                <span class="customer__order-item-price" style="font-weight: var(--font-body-weight-bold);">
+                  {{ line_item.final_line_price | money }}
+                </span>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <table class="customer__table" style="max-width: 36rem; margin-left: auto;">
+            <tbody>
+              <tr>
+                <td>{{ 'customers.order.subtotal' | t }}</td>
+                <td style="text-align: right;">{{ order.line_items_subtotal_price | money }}</td>
+              </tr>
+              {%- for discount in order.discount_applications -%}
+                <tr>
+                  <td>{{ discount.title }}</td>
+                  <td style="text-align: right;">-{{ discount.total_allocated_amount | money }}</td>
+                </tr>
+              {%- endfor -%}
+              {%- for shipping_method in order.shipping_methods -%}
+                <tr>
+                  <td>{{ 'customers.order.shipping' | t }} ({{ shipping_method.title }})</td>
+                  <td style="text-align: right;">{{ shipping_method.price | money }}</td>
+                </tr>
+              {%- endfor -%}
+              <tr>
+                <td>{{ 'customers.order.tax' | t }}</td>
+                <td style="text-align: right;">{{ order.tax_price | money }}</td>
+              </tr>
+              <tr>
+                <td style="font-weight: var(--font-body-weight-bold);">{{ 'customers.order.total' | t }}</td>
+                <td style="text-align: right; font-weight: var(--font-body-weight-bold);">{{ order.total_price | money }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;">
+            <div>
+              <h3 style="font-size: 1.6rem; margin: 0 0 1rem;">{{ 'customers.order.billing_address' | t }}</h3>
+              <div class="customer__subtitle">{{ order.billing_address | format_address }}</div>
+            </div>
+            <div>
+              <h3 style="font-size: 1.6rem; margin: 0 0 1rem;">{{ 'customers.order.shipping_address' | t }}</h3>
+              <div class="customer__subtitle">{{ order.shipping_address | format_address }}</div>
+            </div>
+          </div>
+
+          <a href="{{ routes.account_url }}" class="customer__link" style="display: inline-block; margin-top: 2.4rem;">
+            {{ 'customers.order.back_to_account' | t }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer order",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

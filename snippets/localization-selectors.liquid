@@ -1,0 +1,39 @@
+{% comment %}
+  Renders country and language selectors when enabled in theme settings.
+  Accepts:
+  - context: {String} 'header' or 'footer'
+{% endcomment %}
+
+{%- liquid
+  assign show_country = false
+  assign show_language = false
+
+  if settings.enable_country_selector and localization.available_countries.size > 1
+    assign show_country = true
+  endif
+
+  if settings.enable_language_selector and localization.available_languages.size > 1
+    assign show_language = true
+  endif
+-%}
+
+{%- if show_country or show_language -%}
+  {%- assign show_in_context = false -%}
+  {%- if context == 'header' and settings.localization_in_header -%}
+    {%- assign show_in_context = true -%}
+  {%- endif -%}
+  {%- if context == 'footer' and settings.localization_in_footer -%}
+    {%- assign show_in_context = true -%}
+  {%- endif -%}
+
+  {%- if show_in_context -%}
+    <div class="localization{% if context == 'header' %} header__localization{% else %} footer__localization{% endif %}">
+      {%- if show_country -%}
+        {% render 'country-localization' %}
+      {%- endif -%}
+      {%- if show_language -%}
+        {% render 'language-localization' %}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

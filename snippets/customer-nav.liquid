@@ -1,0 +1,17 @@
+<nav class="customer__nav" aria-label="{{ 'customers.account.navigation' | t }}">
+  <a
+    href="{{ routes.account_url }}"
+    class="customer__nav-link{% if request.page_type == 'customers/account' %} is-active{% endif %}"
+  >
+    {{ 'customers.account.title' | t }}
+  </a>
+  <a
+    href="{{ routes.account_addresses_url }}"
+    class="customer__nav-link{% if request.page_type == 'customers/addresses' %} is-active{% endif %}"
+  >
+    {{ 'customers.addresses.title' | t }}
+  </a>
+  <a href="{{ routes.account_logout_url }}" class="customer__nav-link">
+    {{ 'customers.account.log_out' | t }}
+  </a>
+</nav>

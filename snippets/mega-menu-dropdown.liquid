@@ -1,0 +1,64 @@
+{% comment %}
+  Mega menu dropdown for a top-level nav link.
+  Accepts:
+  - link: {Object} menu link
+  - section: {Object} header section (for promo blocks)
+{% endcomment %}
+
+<div class="mega-menu" role="region" aria-label="{{ link.title | escape }}">
+  <div class="mega-menu__inner page-width">
+    <div class="mega-menu__grid">
+      <div class="mega-menu__columns">
+        {%- for child_link in link.links -%}
+          <div class="mega-menu__column">
+            <a href="{{ child_link.url }}" class="mega-menu__column-title">
+              {{ child_link.title }}
+            </a>
+            {%- if child_link.links.size > 0 -%}
+              <ul class="mega-menu__links list-unstyled" role="list">
+                {%- for grandchild_link in child_link.links -%}
+                  <li>
+                    <a
+                      href="{{ grandchild_link.url }}"
+                      class="mega-menu__link"
+                      {% if grandchild_link.active %}aria-current="page"{% endif %}
+                    >
+                      {{ grandchild_link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'mega_promo' and block.settings.menu_item == link.title -%}
+          <div class="mega-menu__promo" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <a href="{{ block.settings.link | default: link.url }}" class="mega-menu__promo-media">
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'mega-menu__promo-image',
+                    alt: block.settings.heading | default: link.title | escape
+                }}
+              </a>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <p class="mega-menu__promo-heading">{{ block.settings.heading }}</p>
+            {%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <a href="{{ block.settings.link | default: link.url }}" class="mega-menu__promo-button button button--secondary">
+                {{ block.settings.button_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>

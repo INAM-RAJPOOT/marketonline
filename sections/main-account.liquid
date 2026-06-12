@@ -1,0 +1,60 @@
+<section class="customer section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="customer__header">
+      <h1 class="customer__title">{{ 'customers.account.title' | t }}</h1>
+      <p class="customer__subtitle">{{ 'customers.account.welcome' | t: name: customer.name }}</p>
+    </div>
+
+    <div class="customer__grid">
+      {% render 'customer-nav' %}
+
+      <div class="customer__content">
+        <div class="customer__card">
+          <h2 class="customer__title" style="font-size: 2rem; margin-bottom: 2rem;">{{ 'customers.account.order_history' | t }}</h2>
+
+          {%- if customer.orders.size > 0 -%}
+            <div style="overflow-x: auto;">
+              <table class="customer__table">
+                <thead>
+                  <tr>
+                    <th>{{ 'customers.account.order_number' | t }}</th>
+                    <th>{{ 'customers.account.date' | t }}</th>
+                    <th>{{ 'customers.account.payment_status' | t }}</th>
+                    <th>{{ 'customers.account.fulfillment_status' | t }}</th>
+                    <th>{{ 'customers.account.total' | t }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%- for order in customer.orders -%}
+                    <tr>
+                      <td>
+                        <a href="{{ order.customer_url }}" class="customer__link">{{ order.name }}</a>
+                      </td>
+                      <td>{{ order.created_at | date: format: 'date' }}</td>
+                      <td>{{ order.financial_status_label }}</td>
+                      <td>{{ order.fulfillment_status_label }}</td>
+                      <td>{{ order.total_price | money }}</td>
+                    </tr>
+                  {%- endfor -%}
+                </tbody>
+              </table>
+            </div>
+          {%- else -%}
+            <p class="customer__subtitle">{{ 'customers.account.no_orders' | t }}</p>
+            <a href="{{ routes.all_products_collection_url }}" class="button button--primary" style="margin-top: 1.6rem;">
+              {{ 'customers.account.start_shopping' | t }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer account",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

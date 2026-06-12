@@ -1,0 +1,28 @@
+{% comment %}
+  Renders product ratings based on theme reviews provider setting.
+
+  Accepts:
+  - product: {Object} Product (required)
+  - context: {String} card or product (optional)
+  - size: {String} Rating size for standard provider (optional)
+  - link_to_reviews: {Boolean} Link to reviews section (optional)
+  - class: {String} CSS class (optional)
+{% endcomment %}
+
+{%- liquid
+  assign context = context | default: 'card'
+  assign link_to_reviews = link_to_reviews | default: false, allow_false: true
+  assign size = size | default: 'sm'
+-%}
+
+{%- if settings.show_product_rating -%}
+  {%- if settings.reviews_provider == 'judgeme' -%}
+    {% render 'judgeme-badge', product: product, class: class %}
+  {%- elsif settings.reviews_provider == 'standard' -%}
+    {%- if context == 'card' and settings.show_product_rating_on_cards -%}
+      {% render 'product-rating', product: product, size: size, link_to_reviews: link_to_reviews, class: class %}
+    {%- elsif context == 'product' -%}
+      {% render 'product-rating', product: product, size: size, link_to_reviews: link_to_reviews, class: class %}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}

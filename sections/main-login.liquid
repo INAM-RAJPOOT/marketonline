@@ -1,0 +1,104 @@
+<section class="customer section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="customer__header">
+      <h1 class="customer__title">{{ 'customers.login.title' | t }}</h1>
+      <p class="customer__subtitle">
+        {{ 'customers.login.subtitle' | t }}
+        <a href="{{ routes.account_register_url }}" class="customer__link">{{ 'customers.login.create_account' | t }}</a>
+      </p>
+    </div>
+
+    <div class="customer__card">
+      {%- form 'customer_login', novalidate: 'novalidate', class: 'customer__form' -%}
+        {%- if form.errors -%}
+          <div class="customer__errors" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="customer__field">
+          <label for="customer-email">{{ 'customers.login.email' | t }}</label>
+          <input
+            type="email"
+            id="customer-email"
+            name="customer[email]"
+            class="customer__input"
+            autocomplete="email"
+            required
+            {% if form.email %}value="{{ form.email }}"{% endif %}
+          >
+        </div>
+
+        <div class="customer__field">
+          <label for="customer-password">{{ 'customers.login.password' | t }}</label>
+          <input
+            type="password"
+            id="customer-password"
+            name="customer[password]"
+            class="customer__input"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <div class="customer__actions">
+          <button type="submit" class="button button--primary">{{ 'customers.login.submit' | t }}</button>
+          <button type="button" class="customer__link" data-recover-toggle>
+            {{ 'customers.login.forgot_password' | t }}
+          </button>
+        </div>
+      {%- endform -%}
+
+      <div class="customer__recover" id="recover-password" hidden>
+        <h2 class="customer__title" style="font-size: 2rem;">{{ 'customers.recover_password.title' | t }}</h2>
+        <p class="customer__subtitle">{{ 'customers.recover_password.subtext' | t }}</p>
+
+        {%- form 'recover_customer_password', class: 'customer__form' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="customer__success" role="status">{{ 'customers.recover_password.success' | t }}</p>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="customer__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="customer__field">
+            <label for="recover-email">{{ 'customers.login.email' | t }}</label>
+            <input
+              type="email"
+              id="recover-email"
+              name="email"
+              class="customer__input"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="customer__actions">
+            <button type="submit" class="button button--primary">{{ 'customers.recover_password.submit' | t }}</button>
+            <button type="button" class="customer__link" data-recover-toggle>{{ 'customers.recover_password.cancel' | t }}</button>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-recover-toggle]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var panel = document.getElementById('recover-password');
+      if (panel) panel.hidden = !panel.hidden;
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Customer login",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

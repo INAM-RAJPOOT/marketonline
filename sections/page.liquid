@@ -1,0 +1,27 @@
+<section class="page section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    {% render 'breadcrumbs' %}
+    <h1 class="page__title">{{ page.title }}</h1>
+    <div class="page__content rte">{{ page.content }}</div>
+  </div>
+</section>
+
+<style>
+  .page__title {
+    font-size: clamp(2.8rem, 4vw, 4rem);
+    margin: 0 0 2.4rem;
+  }
+
+  .page__content {
+    font-size: 1.6rem;
+    line-height: 1.7;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

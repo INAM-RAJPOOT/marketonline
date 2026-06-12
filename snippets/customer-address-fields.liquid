@@ -1,0 +1,71 @@
+{%- liquid
+  assign addr = address | default: customer.new_address
+  assign field_id = form_id | default: 'new'
+-%}
+
+{%- if form.errors -%}
+  <div class="customer__errors" role="alert">{{ form.errors | default_errors }}</div>
+{%- endif -%}
+
+<div class="customer__field">
+  <label for="address-first-name-{{ field_id }}">{{ 'customers.addresses.first_name' | t }}</label>
+  <input type="text" id="address-first-name-{{ field_id }}" name="address[first_name]" class="customer__input" value="{{ addr.first_name }}" autocomplete="given-name" required>
+</div>
+
+<div class="customer__field">
+  <label for="address-last-name-{{ field_id }}">{{ 'customers.addresses.last_name' | t }}</label>
+  <input type="text" id="address-last-name-{{ field_id }}" name="address[last_name]" class="customer__input" value="{{ addr.last_name }}" autocomplete="family-name" required>
+</div>
+
+<div class="customer__field">
+  <label for="address-company-{{ field_id }}">{{ 'customers.addresses.company' | t }}</label>
+  <input type="text" id="address-company-{{ field_id }}" name="address[company]" class="customer__input" value="{{ addr.company }}" autocomplete="organization">
+</div>
+
+<div class="customer__field">
+  <label for="address-address1-{{ field_id }}">{{ 'customers.addresses.address1' | t }}</label>
+  <input type="text" id="address-address1-{{ field_id }}" name="address[address1]" class="customer__input" value="{{ addr.address1 }}" autocomplete="address-line1" required>
+</div>
+
+<div class="customer__field">
+  <label for="address-address2-{{ field_id }}">{{ 'customers.addresses.address2' | t }}</label>
+  <input type="text" id="address-address2-{{ field_id }}" name="address[address2]" class="customer__input" value="{{ addr.address2 }}" autocomplete="address-line2">
+</div>
+
+<div class="customer__field">
+  <label for="address-city-{{ field_id }}">{{ 'customers.addresses.city' | t }}</label>
+  <input type="text" id="address-city-{{ field_id }}" name="address[city]" class="customer__input" value="{{ addr.city }}" autocomplete="address-level2" required>
+</div>
+
+<div class="customer__field">
+  <label for="address-country-{{ field_id }}">{{ 'customers.addresses.country' | t }}</label>
+  <select id="address-country-{{ field_id }}" name="address[country]" class="customer__select" data-default="{{ addr.country }}" autocomplete="country" required>
+    {{ all_country_option_tags }}
+  </select>
+</div>
+
+<div class="customer__field">
+  <label for="address-province-{{ field_id }}">{{ 'customers.addresses.province' | t }}</label>
+  <select id="address-province-{{ field_id }}" name="address[province]" class="customer__select" data-default="{{ addr.province }}" autocomplete="address-level1">
+  </select>
+</div>
+
+<div class="customer__field">
+  <label for="address-zip-{{ field_id }}">{{ 'customers.addresses.zip' | t }}</label>
+  <input type="text" id="address-zip-{{ field_id }}" name="address[zip]" class="customer__input" value="{{ addr.zip }}" autocomplete="postal-code" required>
+</div>
+
+<div class="customer__field">
+  <label for="address-phone-{{ field_id }}">{{ 'customers.addresses.phone' | t }}</label>
+  <input type="tel" id="address-phone-{{ field_id }}" name="address[phone]" class="customer__input" value="{{ addr.phone }}" autocomplete="tel">
+</div>
+
+<script>
+  (function() {
+    var formId = '{{ field_id }}';
+    if (typeof Shopify === 'undefined' || !Shopify.CountryProvinceSelector) return;
+    new Shopify.CountryProvinceSelector('address-country-' + formId, 'address-province-' + formId, {
+      hideElement: 'address-province-' + formId
+    });
+  })();
+</script>

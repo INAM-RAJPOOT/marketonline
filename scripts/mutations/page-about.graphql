@@ -1,0 +1,18 @@
+mutation CreateAboutPage {
+  pageCreate(
+    page: {
+      title: "About"
+      handle: "about"
+      body: "<p>Learn more about our brand and story.</p>"
+    }
+  ) {
+    page {
+      id
+      handle
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

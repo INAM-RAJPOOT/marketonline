@@ -1,0 +1,38 @@
+{% comment %}
+  Collection product grid and pagination.
+  Accepts:
+  - collection: {Object}
+  - section: {Object}
+  - paginate: {Object}
+{% endcomment %}
+
+<div id="CollectionProductGrid">
+  {%- if collection.products.size > 0 -%}
+    <ul
+      class="collection__grid list-unstyled"
+      id="product-grid"
+      role="list"
+      data-columns="{{ section.settings.columns_desktop }}"
+    >
+      {%- for product in collection.products -%}
+        <li class="collection__grid-item">
+          {% render 'product-card', product: product %}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="collection__pagination" aria-label="{{ 'collections.pagination' | t }}">
+        {{- paginate | default_pagination -}}
+      </nav>
+    {%- endif -%}
+  {%- else -%}
+    <div class="collection__empty">
+      <h2 class="collection__empty-title">{{ 'collections.empty.title' | t }}</h2>
+      <p class="collection__empty-text">{{ 'collections.empty.text' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+        {{ 'collections.empty.button' | t }}
+      </a>
+    </div>
+  {%- endif -%}
+</div>

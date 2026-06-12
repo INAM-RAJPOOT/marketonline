@@ -1,0 +1,82 @@
+{% comment %}
+  Renders a product card.
+
+  Accepts:
+  - product: {Object} Product object (required)
+  - show_quick_add: {Boolean} Show quick-add button (optional, default true)
+{% endcomment %}
+
+{%- liquid
+  assign show_quick_add = show_quick_add | default: true, allow_false: true
+  assign card_product = product
+-%}
+
+<div class="product-card">
+  <div class="product-card__media-wrap">
+    {% render 'wishlist-button', product_handle: card_product.handle, class: 'wishlist-button--card' %}
+    <a href="{{ card_product.url }}" class="product-card__media-link" aria-label="{{ card_product.title | escape }}">
+      <div class="product-card__media">
+        {%- if card_product.featured_media -%}
+          {{
+            card_product.featured_media
+            | image_url: width: 600
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+              widths: '165, 360, 535, 750',
+              class: 'product-card__image',
+              alt: card_product.featured_media.alt | default: card_product.title | escape
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder-svg' }}
+        {%- endif -%}
+        {%- if card_product.compare_at_price > card_product.price -%}
+          <span class="product-card__badge">{{ 'products.sale' | t }}</span>
+        {%- endif -%}
+      </div>
+    </a>
+
+    {%- if show_quick_add -%}
+      {%- if card_product.has_only_default_variant -%}
+        <button
+          type="button"
+          class="product-card__quick-add"
+          data-quick-add
+          data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+          {% unless card_product.available %}disabled{% endunless %}
+        >
+          {%- if card_product.available -%}
+            {{ 'products.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- else -%}
+        <button
+          type="button"
+          class="product-card__quick-add"
+          data-quick-add-modal
+          data-product-handle="{{ card_product.handle }}"
+        >
+          {{ 'products.quick_add' | t }}
+        </button>
+      {%- endif -%}
+    {%- else -%}
+      <span class="product-card__action" aria-hidden="true">{{ 'products.view_product' | t }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="product-card__info">
+    <p class="product-card__vendor">{{ card_product.vendor }}</p>
+    <h3 class="product-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title }}</a>
+    </h3>
+    {% render 'product-reviews-display', product: card_product, context: 'card', size: 'sm', link_to_reviews: true, class: 'product-card__rating' %}
+    {% render 'price', product: card_product, class: 'product-card__price', show_badge: false %}
+    {%- if card_product.unit_price_measurement -%}
+      <div class="product-card__unit-price">
+        {{ card_product.unit_price | money }}/{{ card_product.unit_price_measurement.reference_unit }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

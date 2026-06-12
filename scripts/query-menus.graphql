@@ -1,0 +1,23 @@
+query Menus {
+  menus(first: 10) {
+    nodes {
+      id
+      handle
+      title
+      items {
+        id
+        title
+        url
+        type
+      }
+    }
+  }
+  pages(first: 20) {
+    nodes {
+      id
+      handle
+      title
+      templateSuffix
+    }
+  }
+}

@@ -1,0 +1,50 @@
+<div
+  id="search-modal"
+  class="search-modal"
+  aria-hidden="true"
+  data-predictive-search="{{ settings.predictive_search_enabled }}"
+>
+  <div class="search-modal__overlay" data-search-modal-close tabindex="-1"></div>
+
+  <div
+    class="search-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'search.title' | t }}"
+  >
+    <div class="search-modal__header">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form predictive-search">
+        <label for="search-modal-input" class="visually-hidden">{{ 'search.title' | t }}</label>
+        <div class="search-modal__input-wrap">
+          <svg class="search-modal__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M10 2a8 8 0 105.293 14.707l4 4a1 1 0 001.414-1.414l-4-4A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z"/>
+          </svg>
+          <input
+            type="search"
+            id="search-modal-input"
+            name="q"
+            class="search-modal__input predictive-search__input"
+            placeholder="{{ 'search.placeholder' | t }}"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          >
+          <input type="hidden" name="type" value="product">
+        </div>
+        <div class="predictive-search__results search-modal__results" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+      </form>
+
+      <button
+        type="button"
+        class="search-modal__close"
+        data-search-modal-close
+        aria-label="{{ 'accessibility.close' | t }}"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

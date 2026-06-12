@@ -1,0 +1,87 @@
+<section class="product-recommendations section-spacing" id="shopify-section-{{ section.id }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <h2 class="product-recommendations__heading">{{ section.settings.heading }}</h2>
+    <div id="product-recommendations-container"></div>
+  </div>
+</section>
+
+<style>
+  .product-recommendations__heading {
+    font-size: clamp(2rem, 3vw, 3rem);
+    margin-bottom: 3rem;
+  }
+
+  .product-recommendations__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.4rem;
+  }
+
+  @media (max-width: 990px) {
+    .product-recommendations__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+  const section = document.getElementById('shopify-section-{{ section.id }}');
+  const productId = section.dataset.productId;
+  const container = document.getElementById('product-recommendations-container');
+
+  if (productId && container) {
+    fetch('/recommendations/products.json?product_id=' + productId + '&limit=4&intent=related')
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.products && data.products.length > 0) {
+          const grid = document.createElement('ul');
+          grid.className = 'product-recommendations__grid list-unstyled';
+          grid.setAttribute('role', 'list');
+
+          data.products.forEach(function(product) {
+            const item = document.createElement('li');
+            item.innerHTML = `
+              <div class="product-card">
+                <a href="${product.url}" class="product-card__media-link" aria-label="${product.title}">
+                  <div class="product-card__media">
+                    ${product.featured_image
+                      ? `<img src="${product.featured_image}" alt="${product.title}" class="product-card__image" loading="lazy" width="600" height="600">`
+                      : ''
+                    }
+                    <span class="product-card__action" aria-hidden="true">View product</span>
+                  </div>
+                </a>
+                <div class="product-card__info">
+                  <p class="product-card__vendor">${product.vendor}</p>
+                  <h3 class="product-card__title"><a href="${product.url}">${product.title}</a></h3>
+                  <div class="product-card__price">
+                    <span class="product-card__price--current">${formatMoney(product.price)}</span>
+                  </div>
+                </div>
+              </div>
+            `;
+            grid.appendChild(item);
+          });
+
+          container.appendChild(grid);
+        }
+      });
+  }
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product recommendations",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You may also like"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,90 @@
+<section class="customer section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="customer__header">
+      <h1 class="customer__title">{{ 'customers.addresses.title' | t }}</h1>
+      <p class="customer__subtitle">{{ 'customers.addresses.subtitle' | t }}</p>
+    </div>
+
+    <div class="customer__grid">
+      {% render 'customer-nav' %}
+
+      <div class="customer__content">
+        <div class="customer__card">
+          <button type="button" class="button button--secondary" data-address-toggle="new">
+            {{ 'customers.addresses.add_new' | t }}
+          </button>
+
+          <div id="address-form-new" class="customer__recover" hidden style="margin-top: 2rem;">
+            {%- form 'customer_address', customer.new_address, class: 'customer__form' -%}
+              <h2 class="customer__title" style="font-size: 1.8rem;">{{ 'customers.addresses.add_new' | t }}</h2>
+              {% render 'customer-address-fields', form: form, form_id: 'new' %}
+              <button type="submit" class="button button--primary">{{ 'customers.addresses.add' | t }}</button>
+            {%- endform -%}
+          </div>
+
+          <div class="customer__address-grid">
+            {%- for address in customer.addresses -%}
+              <div class="customer__address-card{% if address == customer.default_address %} is-default{% endif %}">
+                {%- if address == customer.default_address -%}
+                  <span class="customer__address-default-badge">{{ 'customers.addresses.default' | t }}</span>
+                {%- endif -%}
+                <div class="customer__subtitle">{{ address | format_address }}</div>
+
+                <div class="customer__actions" style="margin-top: 1.6rem;">
+                  <button type="button" class="customer__link" data-address-toggle="{{ address.id }}">
+                    {{ 'customers.addresses.edit' | t }}
+                  </button>
+                  {%- form 'customer_address', address, class: 'customer__delete-form' -%}
+                    <button type="submit" name="_method" value="delete" class="customer__link" style="background:none;border:none;cursor:pointer;padding:0;">
+                      {{ 'customers.addresses.delete' | t }}
+                    </button>
+                  {%- endform -%}
+                </div>
+
+                <div id="address-form-{{ address.id }}" class="customer__recover" hidden style="margin-top: 1.6rem;">
+                  {%- form 'customer_address', address, class: 'customer__form' -%}
+                    {% render 'customer-address-fields', form: form, address: address, form_id: address.id %}
+                    <div class="customer__actions">
+                      <button type="submit" class="button button--primary">{{ 'customers.addresses.update' | t }}</button>
+                      {%- unless address == customer.default_address -%}
+                        <button type="submit" name="address[default]" value="1" class="button button--secondary">
+                          {{ 'customers.addresses.set_default' | t }}
+                        </button>
+                      {%- endunless -%}
+                    </div>
+                  {%- endform -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-address-toggle]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = this.dataset.addressToggle;
+      var panel = document.getElementById(target === 'new' ? 'address-form-new' : 'address-form-' + target);
+      if (panel) panel.hidden = !panel.hidden;
+    });
+  });
+
+  document.querySelectorAll('.customer__delete-form').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      if (!confirm('{{ 'customers.addresses.delete_confirm' | t }}')) {
+        e.preventDefault();
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Customer addresses",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

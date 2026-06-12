@@ -1,0 +1,90 @@
+{% comment %}
+  Renders a star rating.
+
+  Accepts:
+  - product: {Object} Product (optional, reads review metafields)
+  - rating: {Number} Override rating 0–5 (optional)
+  - count: {Number} Override review count (optional)
+  - size: {String} sm, md, or lg (optional, default md)
+  - show_count: {Boolean} Show review count (optional, default true)
+  - link_to_reviews: {Boolean} Link to #product-reviews (optional)
+  - class: {String} Wrapper class (optional)
+{% endcomment %}
+
+{%- unless settings.show_product_rating -%}
+  {%- comment -%} Ratings disabled in theme settings {%- endcomment -%}
+{%- else -%}
+  {%- liquid
+    assign size = size | default: 'md'
+    assign show_count = show_count | default: true, allow_false: true
+    assign link_to_reviews = link_to_reviews | default: false, allow_false: true
+    assign wrapper_class = class | default: 'product-rating'
+
+    if rating == blank and product != blank
+      assign rating = product.metafields.reviews.rating.value
+      assign count = product.metafields.reviews.rating_count.value
+    endif
+
+    assign rating_num = rating | plus: 0
+    assign count_num = count | plus: 0
+    assign has_rating = false
+    if rating_num > 0 and count_num > 0
+      assign has_rating = true
+    endif
+  -%}
+
+  {%- if has_rating or settings.show_product_rating_zero -%}
+    {%- capture rating_content -%}
+      <div
+        class="{{ wrapper_class }} product-rating--{{ size }}{% unless has_rating %} product-rating--empty{% endunless %}"
+        {% if has_rating %}
+          aria-label="{{ 'reviews.stars_label' | t: rating: rating_num, count: count_num }}"
+        {% endif %}
+      >
+        <div class="product-rating__stars" aria-hidden="true">
+          {%- for i in (1..5) -%}
+            {%- liquid
+              assign star_fill = 0
+              assign star_diff = rating_num | minus: i | plus: 1
+              if star_diff >= 1
+                assign star_fill = 100
+              elsif star_diff > 0
+                assign star_fill = star_diff | times: 100
+              endif
+            -%}
+            <span class="product-rating__star">
+              <svg class="product-rating__star-empty" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span class="product-rating__star-filled" style="width: {{ star_fill }}%;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+            </span>
+          {%- endfor -%}
+        </div>
+
+        {%- if show_count -%}
+          <span class="product-rating__count">
+            {%- if has_rating -%}
+              {%- if count_num == 1 -%}
+                {{ 'reviews.count_one' | t: count: count_num }}
+              {%- else -%}
+                {{ 'reviews.count' | t: count: count_num }}
+              {%- endif -%}
+            {%- else -%}
+              {{ 'reviews.no_reviews' | t }}
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endcapture -%}
+
+    {%- if link_to_reviews and has_rating -%}
+      <a href="#product-reviews" class="product-rating__link">{{ rating_content }}</a>
+    {%- else -%}
+      {{ rating_content }}
+    {%- endif -%}
+  {%- endif -%}
+{%- endunless -%}

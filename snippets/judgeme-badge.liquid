@@ -1,0 +1,18 @@
+{% comment %}
+  Judge.me star rating badge.
+  Requires Judge.me app installed and metafields synced.
+
+  Accepts:
+  - product: {Object} Product (required)
+  - class: {String} Additional CSS class (optional)
+{% endcomment %}
+
+{%- if product != blank -%}
+  <div
+    class="jdgm-widget jdgm-preview-badge judgeme-badge{% if class %} {{ class }}{% endif %}"
+    data-id="{{ product.id }}"
+    data-auto-install="false"
+  >
+    {{ product.metafields.judgeme.badge }}
+  </div>
+{%- endif -%}

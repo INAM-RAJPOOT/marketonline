@@ -1,0 +1,39 @@
+<section class="customer section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    <div class="customer__header">
+      <h1 class="customer__title">{{ 'customers.activate_account.title' | t }}</h1>
+      <p class="customer__subtitle">{{ 'customers.activate_account.subtext' | t }}</p>
+    </div>
+
+    <div class="customer__card">
+      {%- form 'activate_customer_password', class: 'customer__form' -%}
+        {%- if form.errors -%}
+          <div class="customer__errors" role="alert">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+
+        <div class="customer__field">
+          <label for="activate-password">{{ 'customers.activate_account.password' | t }}</label>
+          <input type="password" id="activate-password" name="customer[password]" class="customer__input" autocomplete="new-password" required>
+        </div>
+
+        <div class="customer__field">
+          <label for="activate-password-confirm">{{ 'customers.activate_account.password_confirm' | t }}</label>
+          <input type="password" id="activate-password-confirm" name="customer[password_confirmation]" class="customer__input" autocomplete="new-password" required>
+        </div>
+
+        <div class="customer__actions">
+          <button type="submit" class="button button--primary">{{ 'customers.activate_account.submit' | t }}</button>
+          <button type="submit" name="decline" class="button button--secondary">{{ 'customers.activate_account.cancel' | t }}</button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activate account",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

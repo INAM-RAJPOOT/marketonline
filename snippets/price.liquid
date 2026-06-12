@@ -1,0 +1,63 @@
+{% comment %}
+  Renders product price.
+
+  Accepts:
+  - product: {Object} Product (optional)
+  - variant: {Object} Variant (optional, overrides product price)
+  - price: {Number} Price in cents (optional)
+  - compare_at_price: {Number} Compare price in cents (optional)
+  - class: {String} Wrapper class (optional)
+  - show_badge: {Boolean} Show sale badge (optional, default true)
+{% endcomment %}
+
+{%- liquid
+  if variant
+    assign price_amount = variant.price
+    assign compare_amount = variant.compare_at_price
+  elsif product
+    assign price_amount = product.price
+    assign compare_amount = product.compare_at_price
+  else
+    assign price_amount = price
+    assign compare_amount = compare_at_price
+  endif
+
+  assign wrapper_class = class | default: 'price'
+  assign show_badge = show_badge | default: true, allow_false: true
+  assign on_sale = false
+  if compare_amount > price_amount
+    assign on_sale = true
+  endif
+-%}
+
+<div class="{{ wrapper_class }}{% if on_sale %} {{ wrapper_class }}--on-sale{% endif %}">
+  {%- if on_sale -%}
+    <span class="{{ wrapper_class }}__compare">
+      <s>
+        {%- if settings.currency_code_enabled -%}
+          {{ compare_amount | money_with_currency }}
+        {%- else -%}
+          {{ compare_amount | money }}
+        {%- endif -%}
+      </s>
+    </span>
+    <span class="{{ wrapper_class }}__sale">
+      {%- if settings.currency_code_enabled -%}
+        {{ price_amount | money_with_currency }}
+      {%- else -%}
+        {{ price_amount | money }}
+      {%- endif -%}
+    </span>
+    {%- if show_badge -%}
+      <span class="{{ wrapper_class }}__badge">{{ 'products.sale' | t }}</span>
+    {%- endif -%}
+  {%- else -%}
+    <span class="{{ wrapper_class }}__regular">
+      {%- if settings.currency_code_enabled -%}
+        {{ price_amount | money_with_currency }}
+      {%- else -%}
+        {{ price_amount | money }}
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+</div>

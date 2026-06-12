@@ -1,0 +1,63 @@
+{% comment %}
+  Renders breadcrumb navigation.
+{% endcomment %}
+
+{%- unless template.name == 'index' -%}
+  <nav class="breadcrumbs" aria-label="{{ 'general.breadcrumbs.label' | t }}">
+    <ol class="breadcrumbs__list list-unstyled" role="list">
+      <li class="breadcrumbs__item">
+        <a href="{{ routes.root_url }}" class="breadcrumbs__link">{{ 'general.breadcrumbs.home' | t }}</a>
+      </li>
+
+      {%- case template.name -%}
+        {%- when 'product' -%}
+          {%- if product.collections.size > 0 -%}
+            <li class="breadcrumbs__item">
+              <a href="{{ product.collections.first.url }}" class="breadcrumbs__link">{{ product.collections.first.title }}</a>
+            </li>
+          {%- endif -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ product.title }}</span>
+          </li>
+
+        {%- when 'collection' -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ collection.title }}</span>
+          </li>
+
+        {%- when 'blog' -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ blog.title }}</span>
+          </li>
+
+        {%- when 'article' -%}
+          <li class="breadcrumbs__item">
+            <a href="{{ blog.url }}" class="breadcrumbs__link">{{ blog.title }}</a>
+          </li>
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ article.title }}</span>
+          </li>
+
+        {%- when 'page' -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ page.title }}</span>
+          </li>
+
+        {%- when 'cart' -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ 'cart.title' | t }}</span>
+          </li>
+
+        {%- when 'search' -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ 'search.title' | t }}</span>
+          </li>
+
+        {%- when 'list-collections' -%}
+          <li class="breadcrumbs__item breadcrumbs__item--current" aria-current="page">
+            <span>{{ 'collections.title' | t }}</span>
+          </li>
+      {%- endcase -%}
+    </ol>
+  </nav>
+{%- endunless -%}

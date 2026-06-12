@@ -1,0 +1,283 @@
+<section class="article section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    {% render 'breadcrumbs' %}
+    <div class="article__layout">
+
+      <article class="article__content">
+        {%- if article.image -%}
+          <div class="article__hero">
+            <img
+              src="{{ article.image | image_url: width: 1200 }}"
+              alt="{{ article.image.alt | default: article.title | escape }}"
+              width="1200"
+              height="600"
+              loading="eager"
+              class="article__hero-image"
+            >
+          </div>
+        {%- endif -%}
+
+        <header class="article__header">
+          <div class="article__meta">
+            <a href="{{ blog.url }}" class="article__blog-link">{{ blog.title }}</a>
+            <span aria-hidden="true">&middot;</span>
+            <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+              {{ article.published_at | date: '%B %d, %Y' }}
+            </time>
+            {%- if article.author != blank -%}
+              <span aria-hidden="true">&middot;</span>
+              <span>{{ article.author }}</span>
+            {%- endif -%}
+          </div>
+          <h1 class="article__title">{{ article.title }}</h1>
+        </header>
+
+        <div class="article__body rte">
+          {{ article.content }}
+        </div>
+
+        {%- if article.tags.size > 0 -%}
+          <div class="article__tags">
+            <span class="article__tags-label">Tags:</span>
+            {%- for tag in article.tags -%}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__tag">{{ tag }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_share -%}
+          <div class="article__share">
+            <span class="article__share-label">{{ 'products.share' | t }}</span>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url }}{{ article.url }}" target="_blank" rel="nofollow noopener" class="article__share-btn">Facebook</a>
+            <a href="https://twitter.com/intent/tweet?url={{ shop.url }}{{ article.url }}&text={{ article.title | url_encode }}" target="_blank" rel="nofollow noopener" class="article__share-btn">X</a>
+          </div>
+        {%- endif -%}
+
+        {%- if blog.comments_enabled? -%}
+          <div class="article__comments" id="comments">
+            <h2 class="article__comments-title">
+              {{ 'blog.article_comments' | t }}
+              {%- if article.comments_count > 0 -%}
+                ({{ article.comments_count }})
+              {%- endif -%}
+            </h2>
+
+            {%- if article.comments_count > 0 -%}
+              <ul class="article__comments-list list-unstyled" role="list">
+                {%- paginate article.comments by 5 -%}
+                  {%- for comment in article.comments -%}
+                    <li class="article__comment" id="{{ comment.id }}">
+                      <div class="article__comment-meta">
+                        <strong>{{ comment.author }}</strong>
+                        <time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">
+                          {{ comment.created_at | date: '%B %d, %Y' }}
+                        </time>
+                      </div>
+                      <div class="article__comment-body">{{ comment.content }}</div>
+                    </li>
+                  {%- endfor -%}
+                  {%- if paginate.pages > 1 -%}
+                    <nav aria-label="Comment pagination">{{ paginate | default_pagination }}</nav>
+                  {%- endif -%}
+                {%- endpaginate -%}
+              </ul>
+            {%- endif -%}
+
+            {%- form 'new_comment', article, id: 'article-comment-form' -%}
+              <h3 class="article__comment-form-title">{{ 'blog.comment_form_title' | t }}</h3>
+              {%- if form.posted_successfully? -%}
+                <p class="article__comment-success">Your comment was posted successfully!</p>
+              {%- endif -%}
+              {%- if form.errors -%}
+                <p class="article__comment-error">{{ form.errors | default_errors }}</p>
+              {%- endif -%}
+              <div class="article__comment-fields">
+                <div class="article__comment-field">
+                  <label for="comment-author">{{ 'blog.comment_form_name' | t }}</label>
+                  <input type="text" id="comment-author" name="comment[author]" required autocomplete="name">
+                </div>
+                <div class="article__comment-field">
+                  <label for="comment-email">{{ 'blog.comment_form_email' | t }}</label>
+                  <input type="email" id="comment-email" name="comment[email]" required autocomplete="email">
+                </div>
+              </div>
+              <div class="article__comment-field">
+                <label for="comment-body">{{ 'blog.comment_form_body' | t }}</label>
+                <textarea id="comment-body" name="comment[body]" required rows="5"></textarea>
+              </div>
+              <button type="submit" class="button button--primary">{{ 'blog.comment_form_submit' | t }}</button>
+            {%- endform -%}
+          </div>
+        {%- endif -%}
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .article__layout { max-width: 80rem; margin: 0 auto; }
+
+  .article__hero {
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 3.2rem;
+    aspect-ratio: 2 / 1;
+  }
+
+  .article__hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .article__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.3rem;
+    color: rgba(var(--color-base-text-1), 0.6);
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+  }
+
+  .article__blog-link {
+    color: rgb(var(--color-base-accent-1));
+    text-decoration: none;
+    font-weight: var(--font-body-weight-bold);
+  }
+
+  .article__title {
+    font-size: clamp(2.8rem, 5vw, 5.2rem);
+    line-height: 1.15;
+    margin: 0 0 3.2rem;
+  }
+
+  .article__body {
+    font-size: 1.7rem;
+    line-height: 1.8;
+    color: rgba(var(--color-base-text-1), 0.9);
+    margin-bottom: 4rem;
+  }
+
+  .article__tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 3rem;
+    font-size: 1.3rem;
+  }
+
+  .article__tags-label { font-weight: var(--font-body-weight-bold); }
+
+  .article__tag {
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(var(--color-base-text-1), 0.2);
+    border-radius: 99px;
+    color: rgba(var(--color-base-text-1), 0.7);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .article__tag:hover { background: rgba(var(--color-base-text-1), 0.05); }
+
+  .article__share {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 2.4rem 0;
+    border-top: 1px solid rgba(var(--color-base-text-1), 0.1);
+    margin-bottom: 4rem;
+    font-size: 1.4rem;
+  }
+
+  .article__share-label { font-weight: var(--font-body-weight-bold); }
+
+  .article__share-btn {
+    color: rgba(var(--color-base-text-1), 0.7);
+    text-decoration: underline;
+    font-size: 1.4rem;
+  }
+
+  .article__comments { border-top: 1px solid rgba(var(--color-base-text-1), 0.1); padding-top: 4rem; }
+
+  .article__comments-title { font-size: 2.4rem; margin-bottom: 3rem; }
+
+  .article__comments-list { display: flex; flex-direction: column; gap: 2.4rem; margin-bottom: 4rem; }
+
+  .article__comment {
+    padding: 2rem;
+    background: rgb(var(--color-base-background-2));
+    border-radius: 10px;
+  }
+
+  .article__comment-meta {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    color: rgba(var(--color-base-text-1), 0.6);
+  }
+
+  .article__comment-body { font-size: 1.5rem; line-height: 1.6; }
+
+  .article__comment-form-title { font-size: 2rem; margin-bottom: 2rem; }
+
+  .article__comment-success { color: #1D9E75; font-size: 1.4rem; margin-bottom: 1.6rem; }
+  .article__comment-error { color: #CC0000; font-size: 1.4rem; margin-bottom: 1.6rem; }
+
+  .article__comment-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .article__comment-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .article__comment-field label {
+    font-size: 1.4rem;
+    font-weight: var(--font-body-weight-bold);
+  }
+
+  .article__comment-field input,
+  .article__comment-field textarea {
+    padding: 1rem 1.2rem;
+    font-size: 1.4rem;
+    font-family: var(--font-body-family);
+    color: rgb(var(--color-base-text-1));
+    background: transparent;
+    border: 1.5px solid rgba(var(--color-base-text-1), 0.25);
+    border-radius: var(--inputs-radius);
+    width: 100%;
+  }
+
+  .article__comment-field textarea { resize: vertical; }
+
+  @media (max-width: 576px) {
+    .article__comment-fields { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

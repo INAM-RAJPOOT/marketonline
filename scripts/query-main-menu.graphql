@@ -1,0 +1,9 @@
+query MainMenu {
+  menus(first: 20) {
+    nodes {
+      id
+      handle
+      title
+    }
+  }
+}

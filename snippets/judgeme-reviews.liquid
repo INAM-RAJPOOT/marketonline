@@ -1,0 +1,18 @@
+{% comment %}
+  Judge.me full review widget.
+  Requires Judge.me app installed.
+
+  Accepts:
+  - product: {Object} Product (required)
+{% endcomment %}
+
+{%- if product != blank -%}
+  <div
+    id="judgeme_product_reviews"
+    class="jdgm-widget jdgm-review-widget judgeme-reviews"
+    data-id="{{ product.id }}"
+    data-auto-install="false"
+  >
+    {{ product.metafields.judgeme.widget }}
+  </div>
+{%- endif -%}

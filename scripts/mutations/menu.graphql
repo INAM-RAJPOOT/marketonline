@@ -1,0 +1,25 @@
+mutation UpdateMainMenu($menuId: ID!) {
+  menuUpdate(
+    id: $menuId
+    title: "Main menu"
+    items: [
+      { title: "Home", type: HTTP, url: "/" }
+      { title: "Catalog", type: HTTP, url: "/collections/all" }
+      { title: "Wishlist", type: HTTP, url: "/pages/wishlist" }
+      { title: "About", type: HTTP, url: "/pages/about" }
+    ]
+  ) {
+    menu {
+      id
+      handle
+      items {
+        title
+        url
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

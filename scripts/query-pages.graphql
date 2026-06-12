@@ -1,0 +1,10 @@
+query Pages {
+  pages(first: 50) {
+    nodes {
+      id
+      handle
+      title
+      templateSuffix
+    }
+  }
+}

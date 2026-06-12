@@ -1,0 +1,6 @@
+extends: theme-check:recommended
+
+OrphanedSnippet:
+  ignore:
+    - snippets/css-variables.liquid
+    - snippets/meta-tags.liquid

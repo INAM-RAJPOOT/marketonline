@@ -1,0 +1,36 @@
+{% comment %}
+  Renders language selector.
+  Accepts:
+  - class_prefix: {String} CSS class prefix (optional, default 'localization')
+{% endcomment %}
+
+{%- liquid
+  assign prefix = class_prefix | default: 'localization'
+-%}
+
+{%- if localization.available_languages.size > 1 -%}
+  <div class="{{ prefix }}__language">
+    {%- form 'localization', class: 'localization__form' -%}
+      <label class="visually-hidden" for="language-selector-{{ prefix }}">
+        {{ 'localization.language_label' | t }}
+      </label>
+      <select
+        id="language-selector-{{ prefix }}"
+        class="{{ prefix }}__select"
+        name="language_code"
+        aria-label="{{ 'localization.language_label' | t }}"
+        onchange="this.form.submit()"
+      >
+        {%- for language in localization.available_languages -%}
+          <option
+            value="{{ language.iso_code }}"
+            lang="{{ language.iso_code }}"
+            {% if language.iso_code == localization.language.iso_code %}selected{% endif %}
+          >
+            {{ language.endonym_name }}
+          </option>
+        {%- endfor -%}
+      </select>
+    {%- endform -%}
+  </div>
+{%- endif -%}

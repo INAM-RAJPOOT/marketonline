@@ -1,0 +1,59 @@
+{% comment %}
+  Renders a single product media item.
+  Accepts:
+  - media: {Object} product media
+  - loading: {String} image loading attribute (optional)
+{% endcomment %}
+
+{%- liquid
+  assign media_loading = loading | default: 'lazy'
+-%}
+
+{%- case media.media_type -%}
+  {%- when 'image' -%}
+    {%- assign media_alt = media.alt | default: product.title | escape -%}
+    {{
+      media
+      | image_url: width: 1200
+      | image_tag: loading: media_loading, class: 'product__media-image', alt: media_alt, sizes: '(min-width: 990px) 50vw, 100vw'
+    }}
+
+  {%- when 'video' -%}
+    {{
+      media
+      | video_tag:
+        class: 'product__media-video',
+        image_size: '1000x',
+        autoplay: false,
+        loop: true,
+        controls: true,
+        muted: false,
+        preload: 'none'
+    }}
+
+  {%- when 'external_video' -%}
+    {{
+      media
+      | external_video_tag:
+        class: 'product__media-video product__media-video--external'
+    }}
+
+  {%- when 'model' -%}
+    <div class="product__media-model">
+      {{
+        media
+        | model_viewer_tag:
+          image_size: '1000x',
+          toggleable: true,
+          class: 'product__media-model-viewer'
+      }}
+    </div>
+
+  {%- else -%}
+    {%- assign preview_alt = media.alt | default: product.title | escape -%}
+    {{
+      media.preview_image
+      | image_url: width: 1200
+      | image_tag: loading: media_loading, class: 'product__media-image', alt: preview_alt
+    }}
+{%- endcase -%}

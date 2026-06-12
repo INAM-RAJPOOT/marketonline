@@ -1,0 +1,253 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/824229169341609081.jpg",
+            "subheading": "New collection",
+            "heading": "Built for the bold.",
+            "text": "Shop the latest arrivals — curated for those who lead.",
+            "button_label": "Shop now",
+            "button_link": "",
+            "button_label_2": "Learn more",
+            "button_link_2": ""
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pexels-markus-winkler-1430818-3925956.jpg",
+            "subheading": "Summer sale",
+            "heading": "Up to 40% off",
+            "text": "Limited time only — grab your favorites before they're gone.",
+            "button_label": "Shop sale",
+            "button_link": "",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        },
+        "slide-3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pexels-jometo-design-194180254-11443064.jpg",
+            "subheading": "Just dropped",
+            "heading": "The essentials edit",
+            "text": "Timeless pieces designed to elevate your everyday.",
+            "button_label": "Explore now",
+            "button_link": "",
+            "button_label_2": "",
+            "button_link_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide-1",
+        "slide-2",
+        "slide-3"
+      ],
+      "settings": {
+        "section_height": 85,
+        "overlay_opacity": 45,
+        "content_alignment": "center",
+        "autoplay": true,
+        "autoplay_speed": 10,
+        "show_arrows": true,
+        "show_dots": true
+      }
+    },
+    "trust-badges": {
+      "type": "trust-badges",
+      "blocks": {
+        "badge-1": {
+          "type": "badge",
+          "settings": {
+            "icon": "shipping",
+            "title": "Free shipping",
+            "text": "On all orders over $75"
+          }
+        },
+        "badge-2": {
+          "type": "badge",
+          "settings": {
+            "icon": "returns",
+            "title": "Easy returns",
+            "text": "30-day hassle-free returns"
+          }
+        },
+        "badge-3": {
+          "type": "badge",
+          "settings": {
+            "icon": "secure",
+            "title": "Secure checkout",
+            "text": "100% protected payments"
+          }
+        },
+        "badge-4": {
+          "type": "badge",
+          "settings": {
+            "icon": "support",
+            "title": "Expert support",
+            "text": "We're here to help 7 days a week"
+          }
+        }
+      },
+      "block_order": [
+        "badge-1",
+        "badge-2",
+        "badge-3",
+        "badge-4"
+      ],
+      "settings": {
+        "heading": "Why customers choose us",
+        "columns_desktop": 4,
+        "color_scheme": "2"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Best sellers",
+        "collection": "women-accessories",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "view_all": true
+      }
+    },
+    "collection-list": {
+      "type": "collection-list",
+      "blocks": {
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "women-accessories",
+            "show_product_count": true
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "hydrogen",
+            "show_product_count": true
+          }
+        },
+        "collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "show_product_count": true
+          }
+        }
+      },
+      "block_order": [
+        "collection-1",
+        "collection-2",
+        "collection-3"
+      ],
+      "settings": {
+        "heading": "Shop by category",
+        "text": "Find exactly what you're looking for",
+        "columns_desktop": 3
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/Women_s_Solid_Color_Mandarin_Collar_Long_Sleeve.jpg",
+        "layout": "image-left",
+        "color_scheme": "1",
+        "subheading": "Limited edition",
+        "heading": "Crafted for those who demand more",
+        "text": "<p>Every piece in our collection is designed with intention — premium materials, timeless style, and details that make the difference.</p>",
+        "button_label": "Explore collection",
+        "button_link": ""
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial-1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Absolutely love the quality. Fast shipping and the product exceeded my expectations. Will definitely order again!",
+            "author": "Sarah M.",
+            "role": "Verified buyer"
+          }
+        },
+        "testimonial-2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Best online shopping experience I've had. The packaging was beautiful and the customer service team was incredibly helpful.",
+            "author": "James T.",
+            "role": "Verified buyer"
+          }
+        },
+        "testimonial-3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "I've tried many brands but nothing compares. Premium quality at a fair price — my go-to store now.",
+            "author": "Emily R.",
+            "role": "Verified buyer"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial-1",
+        "testimonial-2",
+        "testimonial-3"
+      ],
+      "settings": {
+        "subheading": "Real reviews",
+        "heading": "Loved by thousands",
+        "columns_desktop": 3,
+        "color_scheme": "1"
+      }
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "settings": {
+        "text_alignment": "center",
+        "subheading": "Our story",
+        "heading": "Why shop with us?",
+        "text": "<p>We believe in quality products, exceptional service, and a shopping experience that feels personal. Every item is carefully curated for those who value the best.</p>",
+        "button_label": "Learn more",
+        "button_link": ""
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "subheading": "Stay in the loop",
+        "heading": "Get 10% off your first order",
+        "text": "Join our list for exclusive deals, new arrivals, and insider-only discounts.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "color_scheme": "3"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust-badges",
+    "featured-collection",
+    "collection-list",
+    "image-with-text",
+    "testimonials",
+    "rich-text",
+    "newsletter"
+  ]
+}
