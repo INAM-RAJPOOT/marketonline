@@ -1,11 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Meridian",
+    "theme_name": "MarketOnline",
     "theme_version": "1.1.1",
     "theme_author": "ANAM UL HAQ",
-    "theme_documentation_url": "https://github.com/INAM-RAJPOOT/meridian#readme",
-    "theme_support_url": "https://github.com/INAM-RAJPOOT/meridian/issues"
+    "theme_documentation_url": "https://github.com/INAM-RAJPOOT/marketonline#readme",
+    "theme_support_url": "https://github.com/INAM-RAJPOOT/marketonline/issues"
   },
   {
     "name": "t:general.typography",

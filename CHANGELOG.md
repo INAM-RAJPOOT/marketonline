@@ -1,9 +1,9 @@
 # Changelog
 
-## 1.1.1 — 2026-06-08
+## 1.1.1 — 2026-10-28
 
 ### Changed
-- Theme renamed from **My Theme** to **Meridian**
+- Theme and project renamed to **MarketOnline**
 
 ## 1.1.0 — 2026-06-08
 

@@ -1,5 +1,5 @@
 // ============================================
-// GLOBAL JS — Meridian
+// GLOBAL JS — MarketOnline
 // ============================================
 
 document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
@@ -1088,7 +1088,7 @@ class HeroCarousel {
 // ============================================
 // Wishlist
 // ============================================
-const WISHLIST_STORAGE_KEY = 'meridian-wishlist';
+const WISHLIST_STORAGE_KEY = 'marketonline-wishlist';
 
 const Wishlist = {
   get enabled() {

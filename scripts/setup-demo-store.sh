@@ -88,7 +88,7 @@ echo "    ✓ Main menu updated (Home, Catalog, Wishlist, About)"
 
 echo ""
 echo "Done. Next steps:"
-echo "  1. cd meridian && shopify theme push -l --allow-live -n   # sync theme files (wishlist_page setting)"
+echo "  1. cd marketonline && shopify theme push -l --allow-live -n   # sync theme files (wishlist_page setting)"
 echo "  2. Theme editor: confirm Featured collection + collections on homepage"
 echo "  3. Settings → Customer accounts → Classic accounts"
 echo "  4. Checkout app: see ../my-checkout-app/README.md"

@@ -1,6 +1,6 @@
 # Demo store setup
 
-Follow this checklist after installing **Meridian** on a development or demo store.
+Follow this checklist after installing **MarketOnline** on a development or demo store.
 
 > **Plain English:** This file is an Admin checklist — menus, pages, and homepage content. It does not use the terminal except for the final theme push. For a guided overview of the whole repo, see [../GETTING_STARTED.md](../GETTING_STARTED.md).
 
@@ -16,7 +16,7 @@ shopify store auth --store YOUR-STORE.myshopify.com \
 Then:
 
 ```bash
-cd meridian
+cd marketonline
 ./scripts/setup-demo-store.sh
 shopify theme push -l --allow-live -n
 ```
@@ -79,7 +79,7 @@ See `../my-checkout-app/README.md` for trust badges and gift message at checkout
 ## 10. Publish
 
 ```bash
-cd meridian
+cd marketonline
 shopify theme push
 ```
 

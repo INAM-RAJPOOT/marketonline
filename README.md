@@ -1,4 +1,4 @@
-# Meridian
+# MarketOnline
 
 A modern Shopify Online Store 2.0 theme with conversion-focused features, customer accounts, and accessibility built in.
 
@@ -25,7 +25,7 @@ A modern Shopify Online Store 2.0 theme with conversion-focused features, custom
 ## Quick start
 
 ```bash
-cd meridian
+cd marketonline
 shopify theme dev
 ```
 
