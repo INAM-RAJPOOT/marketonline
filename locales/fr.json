@@ -180,10 +180,6 @@
     "back_to_top": "Haut de page",
     "before_after": "Comparer avant et après"
   },
-  "localization": {
-    "country_label": "Pays/région",
-    "language_label": "Langue"
-  },
   "sections": {
     "header": {
       "cart_count": "Panier ({{ count }} articles)",

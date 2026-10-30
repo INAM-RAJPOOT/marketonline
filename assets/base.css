@@ -837,54 +837,6 @@ body.sticky-atc-visible {
   padding-bottom: 7rem;
 }
 
-/* Localization selectors */
-.localization {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  align-items: center;
-}
-
-.localization__form {
-  margin: 0;
-}
-
-.localization__select {
-  padding: 0.6rem 2.4rem 0.6rem 1rem;
-  font-size: 1.3rem;
-  font-family: var(--font-body-family);
-  color: rgb(var(--color-base-text-1));
-  background-color: transparent;
-  border: 1px solid rgba(var(--color-base-text-1), 0.2);
-  border-radius: var(--inputs-radius);
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23121212' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.8rem center;
-}
-
-.header__localization {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.header__localization .localization__select {
-  max-width: 12rem;
-  padding-top: 0.4rem;
-  padding-bottom: 0.4rem;
-  font-size: 1.2rem;
-}
-
-.footer__localization {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-@media (max-width: 768px) {
-  .header__localization { display: none; }
-}
-
 /* Cart drawer */
 .overflow-hidden { overflow: hidden; }
 

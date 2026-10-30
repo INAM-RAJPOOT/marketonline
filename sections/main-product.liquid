@@ -236,6 +236,11 @@
                   </div>
                 {%- endif -%}
 
+              {%- when '@app' -%}
+                <div class="product__app-block" {{ block.shopify_attributes }}>
+                  {% render block %}
+                </div>
+
               {%- when 'share' -%}
                 <div class="product__share" {{ block.shopify_attributes }}>
                   <p class="product__share-label">{{ 'products.share' | t }}</p>

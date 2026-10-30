@@ -1,10 +1,46 @@
 {
   "current": {
-    "max_page_width": "110rem"
+    "max_page_width": "110rem",
+    "buttons_radius": 24,
+    "input_corner_radius": 8,
+    "background_color": "#FBF7F2",
+    "foreground_color": "#3F2E27",
+    "accent_color_1": "#6B4636",
+    "button_label_color_1": "#FBF7F2",
+    "background_color_2": "#F3EBE3",
+    "foreground_color_2": "#3F2E27",
+    "accent_color_2": "#6B4636",
+    "button_label_color_2": "#FBF7F2",
+    "background_color_3": "#4A342C",
+    "foreground_color_3": "#FBF7F2",
+    "accent_color_3": "#E8D5C4",
+    "button_label_color_3": "#4A342C",
+    "background_color_4": "#6B4636",
+    "foreground_color_4": "#FBF7F2",
+    "accent_color_4": "#FBF7F2",
+    "button_label_color_4": "#6B4636"
   },
   "presets": {
     "MarketOnline": {
-      "max_page_width": "110rem"
+      "max_page_width": "110rem",
+      "buttons_radius": 24,
+      "input_corner_radius": 8,
+      "background_color": "#FBF7F2",
+      "foreground_color": "#3F2E27",
+      "accent_color_1": "#6B4636",
+      "button_label_color_1": "#FBF7F2",
+      "background_color_2": "#F3EBE3",
+      "foreground_color_2": "#3F2E27",
+      "accent_color_2": "#6B4636",
+      "button_label_color_2": "#FBF7F2",
+      "background_color_3": "#4A342C",
+      "foreground_color_3": "#FBF7F2",
+      "accent_color_3": "#E8D5C4",
+      "button_label_color_3": "#4A342C",
+      "background_color_4": "#6B4636",
+      "foreground_color_4": "#FBF7F2",
+      "accent_color_4": "#FBF7F2",
+      "button_label_color_4": "#6B4636"
     }
   }
 }

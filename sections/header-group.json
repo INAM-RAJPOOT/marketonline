@@ -5,7 +5,7 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Free shipping on orders over $75 — Shop now",
+        "text": "Our birthday sale is on — 35% off sitewide",
         "show_arrow": true,
         "color_scheme": "3"
       }

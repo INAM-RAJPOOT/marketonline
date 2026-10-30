@@ -15,6 +15,8 @@ A modern Shopify Online Store 2.0 theme with conversion-focused features, custom
 - **Recently viewed** and complementary products
 - **Wishlist** and product reviews
 - **Customer accounts** with account menu and Sign in with Shop
+- **Shopify Markets:** currency and language follow the visitor’s region. There is no country or language dropdown.
+- **Shopify apps:** app embeds run storewide. App blocks can be added on the product page and in the product reviews section.
 - **Storefront locales:** English, French, Italian, German, and Spanish, plus right-to-left layout
 - **Promotions:** countdown, promo tiles, promo popup, press mentions, lookbook hotspots, before/after slider
 - **Quick order list** and customizable contact form
@@ -76,7 +78,7 @@ CI runs Theme Check on push (`.github/workflows/ci.yml`).
 assets/       CSS and JavaScript
 config/       Theme settings
 layout/       theme.liquid
-locales/      en.default.json, fr.json
+locales/      en, fr, it, de, es
 sections/     Page sections
 snippets/     Reusable Liquid partials
 templates/    JSON templates

@@ -180,10 +180,6 @@
     "back_to_top": "Torna su",
     "before_after": "Confronta prima e dopo"
   },
-  "localization": {
-    "country_label": "Paese/regione",
-    "language_label": "Lingua"
-  },
   "sections": {
     "header": {
       "cart_count": "Carrello ({{ count }} articoli)",

@@ -180,10 +180,6 @@
     "back_to_top": "Back to top",
     "before_after": "Compare before and after"
   },
-  "localization": {
-    "country_label": "Country/region",
-    "language_label": "Language"
-  },
   "sections": {
     "header": {
       "cart_count": "Cart ({{ count }} items)",

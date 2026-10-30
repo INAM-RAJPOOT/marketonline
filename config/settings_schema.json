@@ -63,25 +63,25 @@
         "type": "color",
         "id": "background_color",
         "label": "Background",
-        "default": "#FFFFFF"
+        "default": "#FBF7F2"
       },
       {
         "type": "color",
         "id": "foreground_color",
         "label": "Text",
-        "default": "#121212"
+        "default": "#3F2E27"
       },
       {
         "type": "color",
         "id": "accent_color_1",
         "label": "Accent",
-        "default": "#121212"
+        "default": "#6B4636"
       },
       {
         "type": "color",
         "id": "button_label_color_1",
         "label": "Button label",
-        "default": "#FFFFFF"
+        "default": "#FBF7F2"
       },
       {
         "type": "header",
@@ -91,25 +91,25 @@
         "type": "color",
         "id": "background_color_2",
         "label": "Background",
-        "default": "#F3F3F3"
+        "default": "#F3EBE3"
       },
       {
         "type": "color",
         "id": "foreground_color_2",
         "label": "Text",
-        "default": "#121212"
+        "default": "#3F2E27"
       },
       {
         "type": "color",
         "id": "accent_color_2",
         "label": "Accent",
-        "default": "#6D5FFD"
+        "default": "#6B4636"
       },
       {
         "type": "color",
         "id": "button_label_color_2",
         "label": "Button label",
-        "default": "#FFFFFF"
+        "default": "#FBF7F2"
       },
       {
         "type": "header",
@@ -119,25 +119,25 @@
         "type": "color",
         "id": "background_color_3",
         "label": "Background",
-        "default": "#121212"
+        "default": "#4A342C"
       },
       {
         "type": "color",
         "id": "foreground_color_3",
         "label": "Text",
-        "default": "#FFFFFF"
+        "default": "#FBF7F2"
       },
       {
         "type": "color",
         "id": "accent_color_3",
         "label": "Accent",
-        "default": "#6D5FFD"
+        "default": "#E8D5C4"
       },
       {
         "type": "color",
         "id": "button_label_color_3",
         "label": "Button label",
-        "default": "#121212"
+        "default": "#4A342C"
       },
       {
         "type": "header",
@@ -147,25 +147,25 @@
         "type": "color",
         "id": "background_color_4",
         "label": "Background",
-        "default": "#6D5FFD"
+        "default": "#6B4636"
       },
       {
         "type": "color",
         "id": "foreground_color_4",
         "label": "Text",
-        "default": "#FFFFFF"
+        "default": "#FBF7F2"
       },
       {
         "type": "color",
         "id": "accent_color_4",
         "label": "Accent",
-        "default": "#FFFFFF"
+        "default": "#FBF7F2"
       },
       {
         "type": "color",
         "id": "button_label_color_4",
         "label": "Button label",
-        "default": "#6D5FFD"
+        "default": "#6B4636"
       },
       {
         "type": "header",
@@ -239,7 +239,7 @@
         "step": 2,
         "unit": "px",
         "label": "Corner radius",
-        "default": 0
+        "default": 24
       }
     ]
   },
@@ -410,35 +410,6 @@
         "id": "wishlist_page",
         "label": "Wishlist page",
         "info": "Create a page and assign the \"wishlist\" template"
-      }
-    ]
-  },
-  {
-    "name": "Localization",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "enable_country_selector",
-        "default": true,
-        "label": "Enable country/region selector"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_language_selector",
-        "default": true,
-        "label": "Enable language selector"
-      },
-      {
-        "type": "checkbox",
-        "id": "localization_in_header",
-        "default": true,
-        "label": "Show selectors in header"
-      },
-      {
-        "type": "checkbox",
-        "id": "localization_in_footer",
-        "default": false,
-        "label": "Show selectors in footer"
       }
     ]
   },

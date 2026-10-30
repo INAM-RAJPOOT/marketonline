@@ -43,6 +43,8 @@ Use this before submitting to the Shopify Theme Store or sharing with clients.
 - [ ] LICENSE.md included
 - [ ] No copyrighted demo images without license
 - [ ] Third-party app integrations documented (Judge.me, checkout app)
+- [ ] No country or language dropdown on the storefront; regions come from Shopify Markets
+- [ ] App embeds load, and an app block can be added on the product page and the reviews section
 
 ## Performance
 

@@ -16,12 +16,12 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/824229169341609081.jpg",
-            "subheading": "New collection",
-            "heading": "Built for the bold.",
-            "text": "Shop the latest arrivals — curated for those who lead.",
-            "button_label": "Shop now",
+            "subheading": "Our birthday",
+            "heading": "The treat is on us",
+            "text": "35% off the edit you have been waiting for.",
+            "button_label": "Shop the sale",
             "button_link": "",
-            "button_label_2": "Learn more",
+            "button_label_2": "Shop best sellers",
             "button_link_2": ""
           }
         },
@@ -29,23 +29,10 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/pexels-markus-winkler-1430818-3925956.jpg",
-            "subheading": "Summer sale",
-            "heading": "Up to 40% off",
-            "text": "Limited time only — grab your favorites before they're gone.",
-            "button_label": "Shop sale",
-            "button_link": "",
-            "button_label_2": "",
-            "button_link_2": ""
-          }
-        },
-        "slide-3": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/pexels-jometo-design-194180254-11443064.jpg",
-            "subheading": "Just dropped",
-            "heading": "The essentials edit",
-            "text": "Timeless pieces designed to elevate your everyday.",
-            "button_label": "Explore now",
+            "subheading": "Daily ritual",
+            "heading": "Simple care, every day",
+            "text": "A short routine of the products you will actually use.",
+            "button_label": "Build a routine",
             "button_link": "",
             "button_label_2": "",
             "button_link_2": ""
@@ -54,17 +41,76 @@
       },
       "block_order": [
         "slide-1",
-        "slide-2",
-        "slide-3"
+        "slide-2"
       ],
       "settings": {
-        "section_height": 85,
-        "overlay_opacity": 45,
-        "content_alignment": "center",
+        "section_height": 78,
+        "overlay_opacity": 28,
+        "content_alignment": "flex-start",
         "autoplay": true,
-        "autoplay_speed": 10,
+        "autoplay_speed": 8,
         "show_arrows": true,
         "show_dots": true
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "The birthday edit",
+        "collection": "women-accessories",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "view_all": true
+      }
+    },
+    "promo-tiles": {
+      "type": "promo-tiles",
+      "blocks": {
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/824229169341609081.jpg",
+            "badge": "",
+            "heading": "Dull skin",
+            "text": "Brighten the look of tired skin."
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/pexels-markus-winkler-1430818-3925956.jpg",
+            "badge": "",
+            "heading": "Dry skin",
+            "text": "Comfort and softness, day to day."
+          }
+        },
+        "tile-3": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/pexels-jometo-design-194180254-11443064.jpg",
+            "badge": "",
+            "heading": "Acne-prone",
+            "text": "A calmer routine for breakout-prone skin."
+          }
+        }
+      },
+      "block_order": ["tile-1", "tile-2", "tile-3"],
+      "settings": {
+        "heading": "Shop by concern",
+        "columns": 3
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "image": "shopify://shop_images/Women_s_Solid_Color_Mandarin_Collar_Long_Sleeve.jpg",
+        "layout": "image-left",
+        "color_scheme": "2",
+        "subheading": "Your ritual",
+        "heading": "Care that fits in a few steps",
+        "text": "<p>Cleanse, treat, and moisturize. Start with the products you love and keep the routine short enough to repeat.</p>",
+        "button_label": "Shop the ritual",
+        "button_link": ""
       }
     },
     "trust-badges": {
@@ -75,7 +121,7 @@
           "settings": {
             "icon": "shipping",
             "title": "Free shipping",
-            "text": "On all orders over $75"
+            "text": "On orders over $75"
           }
         },
         "badge-2": {
@@ -83,7 +129,7 @@
           "settings": {
             "icon": "returns",
             "title": "Easy returns",
-            "text": "30-day hassle-free returns"
+            "text": "30 days to change your mind"
           }
         },
         "badge-3": {
@@ -91,87 +137,33 @@
           "settings": {
             "icon": "secure",
             "title": "Secure checkout",
-            "text": "100% protected payments"
+            "text": "Protected payments"
           }
         },
         "badge-4": {
           "type": "badge",
           "settings": {
             "icon": "support",
-            "title": "Expert support",
-            "text": "We're here to help 7 days a week"
+            "title": "Real support",
+            "text": "Here seven days a week"
           }
         }
       },
-      "block_order": [
-        "badge-1",
-        "badge-2",
-        "badge-3",
-        "badge-4"
-      ],
+      "block_order": ["badge-1", "badge-2", "badge-3", "badge-4"],
       "settings": {
-        "heading": "Why customers choose us",
+        "heading": "",
         "columns_desktop": 4,
         "color_scheme": "2"
       }
     },
-    "featured-collection": {
+    "featured-collection-2": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Best sellers",
-        "collection": "women-accessories",
+        "heading": "The everyday edit",
+        "collection": "hydrogen",
         "products_to_show": 4,
         "columns_desktop": 4,
         "view_all": true
-      }
-    },
-    "collection-list": {
-      "type": "collection-list",
-      "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": "women-accessories",
-            "show_product_count": true
-          }
-        },
-        "collection-2": {
-          "type": "collection",
-          "settings": {
-            "collection": "hydrogen",
-            "show_product_count": true
-          }
-        },
-        "collection-3": {
-          "type": "collection",
-          "settings": {
-            "collection": "all",
-            "show_product_count": true
-          }
-        }
-      },
-      "block_order": [
-        "collection-1",
-        "collection-2",
-        "collection-3"
-      ],
-      "settings": {
-        "heading": "Shop by category",
-        "text": "Find exactly what you're looking for",
-        "columns_desktop": 3
-      }
-    },
-    "image-with-text": {
-      "type": "image-with-text",
-      "settings": {
-        "image": "shopify://shop_images/Women_s_Solid_Color_Mandarin_Collar_Long_Sleeve.jpg",
-        "layout": "image-left",
-        "color_scheme": "1",
-        "subheading": "Limited edition",
-        "heading": "Crafted for those who demand more",
-        "text": "<p>Every piece in our collection is designed with intention — premium materials, timeless style, and details that make the difference.</p>",
-        "button_label": "Explore collection",
-        "button_link": ""
       }
     },
     "testimonials": {
@@ -181,171 +173,72 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "text": "Absolutely love the quality. Fast shipping and the product exceeded my expectations. Will definitely order again!",
+            "text": "The routine is simple and the products feel gentle. I noticed softer skin within the first week.",
             "author": "Sarah M.",
             "role": "Verified buyer"
           }
-        },
-        "testimonial-2": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "text": "Best online shopping experience I've had. The packaging was beautiful and the customer service team was incredibly helpful.",
-            "author": "James T.",
-            "role": "Verified buyer"
-          }
-        },
-        "testimonial-3": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "text": "I've tried many brands but nothing compares. Premium quality at a fair price — my go-to store now.",
-            "author": "Emily R.",
-            "role": "Verified buyer"
-          }
         }
       },
-      "block_order": [
-        "testimonial-1",
-        "testimonial-2",
-        "testimonial-3"
-      ],
+      "block_order": ["testimonial-1"],
       "settings": {
-        "subheading": "Real reviews",
-        "heading": "Loved by thousands",
-        "columns_desktop": 3,
+        "subheading": "Reviews",
+        "heading": "Kind words",
+        "columns_desktop": 1,
         "color_scheme": "1"
       }
     },
-    "rich-text": {
-      "type": "rich-text",
-      "settings": {
-        "text_alignment": "center",
-        "subheading": "Our story",
-        "heading": "Why shop with us?",
-        "text": "<p>We believe in quality products, exceptional service, and a shopping experience that feels personal. Every item is carefully curated for those who value the best.</p>",
-        "button_label": "Learn more",
-        "button_link": ""
-      }
-    },
-    "countdown": {
-      "type": "countdown",
-      "settings": {
-        "subheading": "Limited time",
-        "heading": "Flash sale ends soon",
-        "text": "<p>Add urgency to promotions, launches, and seasonal offers.</p>",
-        "end_date": "2026-12-31 23:59",
-        "button_label": "Shop the sale",
-        "color_scheme": "3"
-      }
-    },
-    "promo-tiles": {
+    "follow-tiles": {
       "type": "promo-tiles",
       "blocks": {
-        "tile-1": {
+        "follow-1": {
           "type": "tile",
           "settings": {
-            "badge": "New",
-            "heading": "Just dropped",
-            "text": "Shop the latest arrivals."
+            "image": "shopify://shop_images/pexels-jometo-design-194180254-11443064.jpg",
+            "badge": "",
+            "heading": "Morning light",
+            "text": "A few steps before the day starts."
           }
         },
-        "tile-2": {
+        "follow-2": {
           "type": "tile",
           "settings": {
-            "badge": "Sale",
-            "heading": "Up to 40% off",
-            "text": "Seasonal styles, limited time."
+            "image": "shopify://shop_images/824229169341609081.jpg",
+            "badge": "",
+            "heading": "On the vanity",
+            "text": "The products we reach for most."
           }
         },
-        "tile-3": {
+        "follow-3": {
           "type": "tile",
           "settings": {
-            "badge": "Bundle",
-            "heading": "Buy more, save more",
-            "text": "Volume pricing on selected lines."
+            "image": "shopify://shop_images/pexels-markus-winkler-1430818-3925956.jpg",
+            "badge": "",
+            "heading": "Textures",
+            "text": "Creams, oils, and everything between."
+          }
+        },
+        "follow-4": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/Women_s_Solid_Color_Mandarin_Collar_Long_Sleeve.jpg",
+            "badge": "",
+            "heading": "Follow along",
+            "text": "New routines, posted as we make them."
           }
         }
       },
-      "block_order": ["tile-1", "tile-2", "tile-3"],
+      "block_order": ["follow-1", "follow-2", "follow-3", "follow-4"],
       "settings": {
-        "heading": "This week's offers",
-        "columns": 3
-      }
-    },
-    "press": {
-      "type": "press-coverage",
-      "blocks": {
-        "press-1": {
-          "type": "mention",
-          "settings": {
-            "publication": "Vogue",
-            "quote": "A considered edit for everyday dressing."
-          }
-        },
-        "press-2": {
-          "type": "mention",
-          "settings": {
-            "publication": "Forbes",
-            "quote": "Quality that holds up past the first season."
-          }
-        },
-        "press-3": {
-          "type": "mention",
-          "settings": {
-            "publication": "Wired",
-            "quote": "A storefront that gets out of the way of the product."
-          }
-        }
-      },
-      "block_order": ["press-1", "press-2", "press-3"],
-      "settings": {
-        "heading": "As seen in",
-        "color_scheme": "2"
-      }
-    },
-    "before-after": {
-      "type": "before-after",
-      "settings": {
-        "subheading": "See the difference",
-        "heading": "Before and after",
-        "text": "<p>Drag the slider to compare two images.</p>",
-        "before_label": "Before",
-        "after_label": "After"
-      }
-    },
-    "lookbook": {
-      "type": "image-hotspots",
-      "blocks": {
-        "hotspot-1": {
-          "type": "hotspot",
-          "settings": {
-            "horizontal": 32,
-            "vertical": 40,
-            "heading": "Jacket"
-          }
-        },
-        "hotspot-2": {
-          "type": "hotspot",
-          "settings": {
-            "horizontal": 62,
-            "vertical": 68,
-            "heading": "Sneakers"
-          }
-        }
-      },
-      "block_order": ["hotspot-1", "hotspot-2"],
-      "settings": {
-        "heading": "Shop the look",
-        "text": "<p>Tag products or details on a lookbook image. Tap a hotspot to open it.</p>"
+        "heading": "Follow along",
+        "columns": 4
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "subheading": "Stay in the loop",
-        "heading": "Get 10% off your first order",
-        "text": "Join our list for exclusive deals, new arrivals, and insider-only discounts.",
+        "subheading": "Join the list",
+        "heading": "10% off your first order",
+        "text": "Birthday offers, new arrivals, and restocks.",
         "placeholder": "Enter your email",
         "button_label": "Subscribe",
         "color_scheme": "3"
@@ -354,17 +247,13 @@
   },
   "order": [
     "hero",
-    "trust-badges",
     "featured-collection",
-    "collection-list",
-    "image-with-text",
-    "testimonials",
-    "rich-text",
-    "countdown",
     "promo-tiles",
-    "press",
-    "before-after",
-    "lookbook",
+    "image-with-text",
+    "trust-badges",
+    "featured-collection-2",
+    "testimonials",
+    "follow-tiles",
     "newsletter"
   ]
 }

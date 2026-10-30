@@ -43,12 +43,21 @@ Or run `./scripts/setup-demo-store.sh` to set these links automatically.
 
 **Theme settings → Wishlist → Wishlist page:** select the Wishlist page.
 
-## 3. Collections (Theme editor)
+## 3. Homepage (Theme editor)
 
-On the **Homepage**, assign collections in:
+The homepage is already stacked as a beauty landing page. Assign collections and images in:
 
-- **Featured collection** → pick your best-selling collection
-- **Collection list** blocks → assign 2–3 collections
+- **Hero** — two slides
+- **The birthday edit** — featured collection (`women-accessories`)
+- **Shop by concern** — three promo tiles
+- **Care that fits in a few steps** — image with text
+- **Trust badges**
+- **The everyday edit** — featured collection (`hydrogen`)
+- **Kind words** — testimonials
+- **Follow along** — promo tiles
+- **Newsletter**
+
+Countdown, press, before/after, and lookbook sections are in the theme. Add them from the theme editor if you want them on the homepage.
 
 ## 4. Blog (optional)
 
@@ -64,9 +73,15 @@ Use Shopify's sample products or import your catalog. Ensure at least one collec
 
 **Settings → Customer accounts → Classic accounts** (required for login/register templates).
 
-## 7. Markets & languages (optional)
+## 7. Markets & languages
 
-Add a second language in **Settings → Languages** to test French (`fr.json`) and localization selectors.
+The theme does not show a country or language dropdown. Shopify chooses the market from the visitor’s location.
+
+1. **Settings → Markets** — add each region, with its currency and default language.
+2. **Settings → Languages** — publish the languages you sell in. The theme includes English, French, Italian, German, and Spanish.
+3. Leave automatic market detection on so each visitor sees that region’s prices and language.
+
+The country field on the account address form is the shipping address. It is not a storefront region switcher.
 
 ## 8. Reviews (optional)
 

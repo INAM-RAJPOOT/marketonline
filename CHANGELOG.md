@@ -11,6 +11,11 @@
 - Italian, German, and Spanish locales, and right-to-left layout for RTL languages
 - Image rollover, product badges, sticky header setting, back to top, and scroll animations
 
+### Changed
+- Removed the country and language dropdowns. Shopify Markets sets currency and language from the visitor’s region.
+- Product app blocks now render on the product page.
+- Homepage uses the cream and brown palette and a beauty-store section order.
+
 ## 1.1.1 — 2026-10-28
 
 ### Changed
