@@ -51,7 +51,11 @@
     "shipping_at_checkout": "Shipping calculated at checkout.",
     "increase": "Increase quantity",
     "decrease": "Decrease quantity",
-    "upsells_heading": "You may also like"
+    "upsells_heading": "You may also like",
+    "note": "Order note",
+    "note_placeholder": "Add a note for the seller",
+    "gift_wrap": "Add gift wrapping",
+    "gift_message": "Gift message"
   },
   "customers": {
     "login": {
@@ -160,7 +164,8 @@
       "button": "Browse all products"
     },
     "min_price": "Min price",
-    "max_price": "Max price"
+    "max_price": "Max price",
+    "browse": "Browse"
   },
   "general": {
     "search": {
@@ -171,7 +176,9 @@
       "home": "Home"
     },
     "page": "Page {{ number }}",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "back_to_top": "Back to top",
+    "before_after": "Compare before and after"
   },
   "localization": {
     "country_label": "Country/region",
@@ -215,7 +222,67 @@
     "shipping_policy_html": "<a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
     "media": {
       "gallery": "Product media gallery"
+    },
+    "preorder": "Pre-order",
+    "new": "New",
+    "view_details": "View full details",
+    "price_label": "Price",
+    "stock_available": "In stock",
+    "in_stock": "{{ count }} in stock",
+    "low_stock": "Only {{ count }} left",
+    "back_in_stock": "Email me when this is back in stock",
+    "back_in_stock_email": "Email",
+    "back_in_stock_submit": "Notify me",
+    "back_in_stock_success": "We'll email you when this product is available.",
+    "back_in_stock_body": "Notify me when {{ product }} — {{ variant }} is back in stock.",
+    "volume_pricing": "Volume pricing",
+    "volume_at_least": "{{ count }}+ for {{ price }}",
+    "quantity_min": "Minimum of {{ count }}",
+    "quantity_max": "Maximum of {{ count }}",
+    "quantity_increment": "Sold in increments of {{ count }}",
+    "size_chart": "Size chart",
+    "size_chart_size": "Size",
+    "size_chart_chest": "Chest (cm)",
+    "size_chart_waist": "Waist (cm)",
+    "size_chart_hip": "Hip (cm)",
+    "size_chart_note": "Measurements are approximate. Replace this table with your own page or image.",
+    "pickup_heading": "Store pickup",
+    "quick_view": "Quick view",
+    "tabs": {
+      "description": "Description",
+      "shipping": "Shipping",
+      "ingredients": "Ingredients",
+      "usage": "How to use"
     }
+  },
+  "age": {
+    "title": "Age verification",
+    "text": "You must be {{ age }} or older to enter this store.",
+    "enter": "I am {{ age }} or older",
+    "leave": "Exit"
+  },
+  "popup": {
+    "close": "Close popup"
+  },
+  "quick_order": {
+    "add_selected": "Add selected to cart",
+    "empty": "Choose a collection for this quick order list in the theme editor.",
+    "added": "Selected products were added to your cart.",
+    "choose": "Enter a quantity for at least one product."
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "success": "Thanks for contacting us. We'll get back to you soon."
+  },
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "ended": "This offer has ended"
   },
   "password": {
     "title": "This shop is private",

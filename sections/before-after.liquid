@@ -1,0 +1,114 @@
+<section class="before-after section-spacing" id="shopify-section-{{ section.id }}">
+  <div class="page-width before-after__layout">
+    <div class="before-after__copy">
+      {%- if section.settings.subheading != blank -%}
+        <p class="before-after__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="before-after__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="before-after__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+    <div class="before-after__stage" data-before-after>
+      <div class="before-after__after">
+        {%- if section.settings.after_image != blank -%}
+          {{
+            section.settings.after_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '600, 900, 1200, 1600',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              alt: section.settings.after_label | escape
+          }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'before-after__placeholder' }}
+        {%- endif -%}
+        <span class="before-after__label before-after__label--after">{{ section.settings.after_label }}</span>
+      </div>
+      <div class="before-after__before" data-before-pane>
+        {%- if section.settings.before_image != blank -%}
+          {{
+            section.settings.before_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '600, 900, 1200, 1600',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              alt: section.settings.before_label | escape
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'before-after__placeholder' }}
+        {%- endif -%}
+        <span class="before-after__label">{{ section.settings.before_label }}</span>
+      </div>
+      <label class="visually-hidden" for="BeforeAfter-{{ section.id }}">{{ 'general.before_after' | t }}</label>
+      <input
+        id="BeforeAfter-{{ section.id }}"
+        class="before-after__range"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        data-before-after-range
+      >
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before/after slider",
+  "tag": "section",
+  "class": "section-before-after",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "See the difference"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Before and after"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Drag the slider to compare two images.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "After"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before/after slider"
+    }
+  ]
+}
+{% endschema %}

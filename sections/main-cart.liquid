@@ -142,6 +142,7 @@
         <div class="cart__summary">
           <div class="cart__summary-inner">
             <h2 class="cart__summary-title">{{ 'cart.order_summary' | t }}</h2>
+            {% render 'cart-extras', context: 'page' %}
 
             {%- comment -%} Discount codes {%- endcomment -%}
             {%- if section.settings.show_discount_code -%}

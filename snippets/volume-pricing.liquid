@@ -1,0 +1,52 @@
+{% comment %}
+  B2B quantity rules and volume price breaks.
+  Accepts:
+  - product: {Object}
+  - block: {Object}
+{% endcomment %}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign rule = variant.quantity_rule
+  assign has_rule = false
+  if rule.min > 1 or rule.increment > 1 or rule.max != blank
+    assign has_rule = true
+  endif
+  assign has_breaks = false
+  if variant.quantity_price_breaks.size > 0
+    assign has_breaks = true
+  endif
+-%}
+<div
+  class="volume-pricing"
+  data-volume-pricing
+  data-label-min="{{ 'products.quantity_min' | t: count: '__COUNT__' | escape }}"
+  data-label-max="{{ 'products.quantity_max' | t: count: '__COUNT__' | escape }}"
+  data-label-step="{{ 'products.quantity_increment' | t: count: '__COUNT__' | escape }}"
+  data-label-break="{{ 'products.volume_at_least' | t: count: '__COUNT__', price: '__PRICE__' | escape }}"
+  {% unless has_rule or has_breaks %}hidden{% endunless %}
+  {{ block.shopify_attributes }}
+>
+  <p class="volume-pricing__heading">{{ 'products.volume_pricing' | t }}</p>
+  <ul class="volume-pricing__rules list-unstyled" data-volume-rules>
+    {%- if rule.min > 1 -%}
+      <li>{{ 'products.quantity_min' | t: count: rule.min }}</li>
+    {%- endif -%}
+    {%- if rule.max != blank -%}
+      <li>{{ 'products.quantity_max' | t: count: rule.max }}</li>
+    {%- endif -%}
+    {%- if rule.increment > 1 -%}
+      <li>{{ 'products.quantity_increment' | t: count: rule.increment }}</li>
+    {%- endif -%}
+  </ul>
+  {%- if has_breaks -%}
+    <ul class="volume-pricing__breaks list-unstyled" data-volume-breaks>
+      {%- for price_break in variant.quantity_price_breaks -%}
+        <li data-min="{{ price_break.minimum_quantity }}">
+          {{ 'products.volume_at_least' | t: count: price_break.minimum_quantity, price: price_break.price | money }}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <ul class="volume-pricing__breaks list-unstyled" data-volume-breaks hidden></ul>
+  {%- endif -%}
+</div>

@@ -49,6 +49,8 @@
         </div>
       {%- endform -%}
 
+      {% render 'shop-login' %}
+
       <div class="customer__recover" id="recover-password" hidden>
         <h2 class="customer__title" style="font-size: 2rem;">{{ 'customers.recover_password.title' | t }}</h2>
         <p class="customer__subtitle">{{ 'customers.recover_password.subtext' | t }}</p>

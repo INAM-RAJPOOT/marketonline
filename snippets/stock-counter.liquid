@@ -1,0 +1,36 @@
+{% comment %}
+  Shows inventory for the selected variant.
+  Accepts:
+  - product: {Object}
+  - block: {Object}
+{% endcomment %}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign threshold = block.settings.threshold | default: 5
+  assign show_count = block.settings.show_count
+-%}
+<p
+  class="stock-counter"
+  data-stock-counter
+  data-threshold="{{ threshold }}"
+  data-show-count="{% if show_count %}true{% else %}false{% endif %}"
+  data-label-in="{{ 'products.stock_available' | t | escape }}"
+  data-label-count="{{ 'products.in_stock' | t: count: '__COUNT__' | escape }}"
+  data-label-low="{{ 'products.low_stock' | t: count: '__COUNT__' | escape }}"
+  data-label-out="{{ 'products.sold_out' | t | escape }}"
+  {{ block.shopify_attributes }}
+>
+  {%- if variant.available == false -%}
+    <span class="stock-counter__dot stock-counter__dot--out"></span>
+    {{ 'products.sold_out' | t }}
+  {%- elsif variant.inventory_management != blank and variant.inventory_quantity <= threshold and variant.inventory_quantity > 0 -%}
+    <span class="stock-counter__dot stock-counter__dot--low"></span>
+    {{ 'products.low_stock' | t: count: variant.inventory_quantity }}
+  {%- elsif show_count and variant.inventory_management != blank and variant.inventory_quantity > 0 -%}
+    <span class="stock-counter__dot stock-counter__dot--in"></span>
+    {{ 'products.in_stock' | t: count: variant.inventory_quantity }}
+  {%- elsif variant.available -%}
+    <span class="stock-counter__dot stock-counter__dot--in"></span>
+    {{ 'products.stock_available' | t }}
+  {%- endif -%}
+</p>

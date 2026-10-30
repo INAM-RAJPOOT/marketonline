@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "blocks": {
+        "topic": {
+          "type": "dropdown",
+          "settings": {
+            "label": "Topic",
+            "options": "Order, Product, Wholesale, Other"
+          }
+        },
+        "order": {
+          "type": "text",
+          "settings": {
+            "label": "Order number"
+          }
+        }
+      },
+      "block_order": ["topic", "order"],
+      "settings": {
+        "heading": "Contact us",
+        "text": "<p>Questions about an order, a product, or a wholesale account? Send us a note.</p>",
+        "button_label": "Send"
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,5 +1,12 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+{%- liquid
+  assign rtl_locales = 'ar,he,fa,ur,yi,dv,ku,ps' | split: ','
+  assign html_dir = 'ltr'
+  if rtl_locales contains request.locale.iso_code
+    assign html_dir = 'rtl'
+  endif
+-%}
+<html lang="{{ request.locale.iso_code }}" dir="{{ html_dir }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -180,6 +187,7 @@
     </style>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'features.css' | asset_url | stylesheet_tag }}
     {%- if template.directory == 'customers' -%}
       {{ 'customer.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
@@ -191,6 +199,7 @@
           cart_add_url: '{{ routes.cart_add_url }}',
           cart_change_url: '{{ routes.cart_change_url }}',
           cart_url: '{{ routes.cart_url }}',
+          cart_update_url: '{{ routes.cart_update_url }}',
           search_url: '{{ routes.search_url }}',
           root: '{{ routes.root_url }}'
         },
@@ -210,6 +219,10 @@
           searchViewAll: {{ 'search.view_all' | t: terms: '__TERMS__' | json }},
           cartUpsellsHeading: {{ 'cart.upsells_heading' | t | json }},
           quickAdd: {{ 'products.quick_add' | t | json }},
+          preorder: {{ 'products.preorder' | t | json }},
+          viewDetails: {{ 'products.view_details' | t | json }},
+          quickOrderAdded: {{ 'quick_order.added' | t | json }},
+          quickOrderEmpty: {{ 'quick_order.choose' | t | json }},
           carouselSlide: {{ 'accessibility.carousel_slide' | t: current: '__CURRENT__', total: '__TOTAL__', title: '__TITLE__' | json }},
           loading: {{ 'accessibility.loading' | t | json }},
           wishlistAdd: {{ 'wishlist.add' | t | json }},
@@ -221,7 +234,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="{% if settings.enable_animations %}theme-animate{% endif %}" {% if product %}data-track-product="{{ product.handle }}"{% endif %}>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -242,7 +255,12 @@
     {% render 'search-modal' %}
     {% render 'cart-drawer' %}
     {% render 'quick-add-modal' %}
+    {% render 'quick-view-modal' %}
+    {% render 'age-verifier' %}
+    {% render 'promo-popup' %}
+    {% render 'back-to-top' %}
 
     <script src="{{ 'global.js' | asset_url }}" defer></script>
+    <script src="{{ 'features.js' | asset_url }}" defer></script>
   </body>
 </html>

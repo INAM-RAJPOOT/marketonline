@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "MarketOnline",
-    "theme_version": "1.1.1",
+    "theme_version": "1.2.0",
     "theme_author": "ANAM UL HAQ",
     "theme_documentation_url": "https://github.com/INAM-RAJPOOT/marketonline#readme",
     "theme_support_url": "https://github.com/INAM-RAJPOOT/marketonline/issues"
@@ -439,6 +439,111 @@
         "id": "localization_in_footer",
         "default": false,
         "label": "Show selectors in footer"
+      }
+    ]
+  },
+  {
+    "name": "Cart options",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_cart_note",
+        "default": true,
+        "label": "Enable order notes"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_gift_wrap",
+        "default": true,
+        "label": "Enable gift wrapping"
+      },
+      {
+        "type": "product",
+        "id": "gift_wrap_product",
+        "label": "Gift wrap product",
+        "info": "Optional paid gift-wrap product. Leave empty to save gift wrap as a cart note only."
+      }
+    ]
+  },
+  {
+    "name": "Age verification",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_age_verifier",
+        "default": false,
+        "label": "Enable age verifier"
+      },
+      {
+        "type": "range",
+        "id": "age_verifier_minimum",
+        "min": 18,
+        "max": 21,
+        "step": 1,
+        "label": "Minimum age",
+        "default": 18
+      }
+    ]
+  },
+  {
+    "name": "Promo popup",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_promo_popup",
+        "default": true,
+        "label": "Enable promo popup"
+      },
+      {
+        "type": "image_picker",
+        "id": "promo_popup_image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "promo_popup_heading",
+        "label": "Heading",
+        "default": "Get 10% off"
+      },
+      {
+        "type": "richtext",
+        "id": "promo_popup_text",
+        "label": "Text",
+        "default": "<p>Join the list for new arrivals and private offers.</p>"
+      },
+      {
+        "type": "text",
+        "id": "promo_popup_button",
+        "label": "Button label",
+        "default": "Subscribe"
+      },
+      {
+        "type": "range",
+        "id": "promo_popup_delay",
+        "min": 1,
+        "max": 15,
+        "step": 1,
+        "unit": "s",
+        "label": "Delay",
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Motion",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_animations",
+        "default": true,
+        "label": "Enable animations",
+        "info": "Page fade, scroll reveal, and cart icon motion. Honors reduced-motion preferences."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_back_to_top",
+        "default": true,
+        "label": "Show back to top button"
       }
     ]
   }

@@ -1,0 +1,91 @@
+<section class="countdown section-spacing color-scheme-{{ section.settings.color_scheme }}" id="shopify-section-{{ section.id }}">
+  <div class="page-width countdown__inner">
+    {%- if section.settings.subheading != blank -%}
+      <p class="countdown__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="countdown__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <div class="countdown__text rte">{{ section.settings.text }}</div>
+    {%- endif -%}
+    <div
+      class="countdown__timer"
+      data-countdown
+      data-end="{{ section.settings.end_date | escape }}"
+      data-ended="{{ 'countdown.ended' | t | escape }}"
+      role="timer"
+    >
+      <div class="countdown__unit"><span data-countdown-days>00</span><small>{{ 'countdown.days' | t }}</small></div>
+      <div class="countdown__unit"><span data-countdown-hours>00</span><small>{{ 'countdown.hours' | t }}</small></div>
+      <div class="countdown__unit"><span data-countdown-minutes>00</span><small>{{ 'countdown.minutes' | t }}</small></div>
+      <div class="countdown__unit"><span data-countdown-seconds>00</span><small>{{ 'countdown.seconds' | t }}</small></div>
+    </div>
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link }}" class="button button--primary">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Countdown timer",
+  "tag": "section",
+  "class": "section-countdown",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Limited time"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Flash sale ends soon"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Add urgency to promotions, launches, and seasonal offers.</p>"
+    },
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "End date",
+      "info": "Format: YYYY-MM-DD HH:MM (store timezone)",
+      "default": "2026-12-31 23:59"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the sale"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "1", "label": "Scheme 1" },
+        { "value": "2", "label": "Scheme 2" },
+        { "value": "3", "label": "Scheme 3" },
+        { "value": "4", "label": "Scheme 4" }
+      ],
+      "default": "3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Countdown timer"
+    }
+  ]
+}
+{% endschema %}

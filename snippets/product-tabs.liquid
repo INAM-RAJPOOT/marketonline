@@ -1,0 +1,92 @@
+{% comment %}
+  Product detail tabs: description, shipping, ingredients, and usage.
+  Accepts:
+  - product: {Object}
+  - block: {Object}
+{% endcomment %}
+{%- liquid
+  assign shipping_mf = product.metafields.custom.shipping
+  assign ingredients_mf = product.metafields.custom.ingredients
+  assign usage_mf = product.metafields.custom.usage
+  assign nutrition_mf = product.metafields.custom.nutrition
+
+  assign show_description = false
+  if block.settings.show_description and product.description != blank
+    assign show_description = true
+  endif
+  assign show_shipping = false
+  if block.settings.show_shipping
+    if shipping_mf != blank or block.settings.shipping != blank
+      assign show_shipping = true
+    endif
+  endif
+  assign show_ingredients = false
+  if block.settings.show_ingredients
+    if ingredients_mf != blank or nutrition_mf != blank or block.settings.ingredients != blank
+      assign show_ingredients = true
+    endif
+  endif
+  assign show_usage = false
+  if block.settings.show_usage
+    if usage_mf != blank or block.settings.usage != blank
+      assign show_usage = true
+    endif
+  endif
+-%}
+{%- if show_description or show_shipping or show_ingredients or show_usage -%}
+  <div class="product-tabs" data-product-tabs {{ block.shopify_attributes }}>
+    <div class="product-tabs__list" role="tablist">
+      {%- if show_description -%}
+        <button type="button" class="product-tabs__tab is-active" role="tab" aria-selected="true" data-tab="description">{{ 'products.tabs.description' | t }}</button>
+      {%- endif -%}
+      {%- if show_shipping -%}
+        <button type="button" class="product-tabs__tab{% unless show_description %} is-active{% endunless %}" role="tab" aria-selected="{% unless show_description %}true{% else %}false{% endunless %}" data-tab="shipping">{{ 'products.tabs.shipping' | t }}</button>
+      {%- endif -%}
+      {%- if show_ingredients -%}
+        <button type="button" class="product-tabs__tab{% unless show_description or show_shipping %} is-active{% endunless %}" role="tab" aria-selected="{% unless show_description or show_shipping %}true{% else %}false{% endunless %}" data-tab="ingredients">{{ 'products.tabs.ingredients' | t }}</button>
+      {%- endif -%}
+      {%- if show_usage -%}
+        <button type="button" class="product-tabs__tab{% unless show_description or show_shipping or show_ingredients %} is-active{% endunless %}" role="tab" aria-selected="{% unless show_description or show_shipping or show_ingredients %}true{% else %}false{% endunless %}" data-tab="usage">{{ 'products.tabs.usage' | t }}</button>
+      {%- endif -%}
+    </div>
+
+    {%- if show_description -%}
+      <div class="product-tabs__panel rte is-active" data-tab-panel="description" role="tabpanel">
+        {{ product.description }}
+      </div>
+    {%- endif -%}
+
+    {%- if show_shipping -%}
+      <div class="product-tabs__panel rte{% unless show_description %} is-active{% endunless %}" data-tab-panel="shipping" role="tabpanel">
+        {%- if shipping_mf != blank -%}
+          {{ shipping_mf | metafield_tag }}
+        {%- else -%}
+          {{ block.settings.shipping }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if show_ingredients -%}
+      <div class="product-tabs__panel rte{% unless show_description or show_shipping %} is-active{% endunless %}" data-tab-panel="ingredients" role="tabpanel">
+        {%- if ingredients_mf != blank -%}
+          {{ ingredients_mf | metafield_tag }}
+        {%- elsif block.settings.ingredients != blank -%}
+          {{ block.settings.ingredients }}
+        {%- endif -%}
+        {%- if nutrition_mf != blank -%}
+          <div class="product-tabs__nutrition">{{ nutrition_mf | metafield_tag }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if show_usage -%}
+      <div class="product-tabs__panel rte{% unless show_description or show_shipping or show_ingredients %} is-active{% endunless %}" data-tab-panel="usage" role="tabpanel">
+        {%- if usage_mf != blank -%}
+          {{ usage_mf | metafield_tag }}
+        {%- else -%}
+          {{ block.settings.usage }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

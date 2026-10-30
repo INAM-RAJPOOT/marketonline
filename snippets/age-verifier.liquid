@@ -1,0 +1,26 @@
+{%- if settings.enable_age_verifier -%}
+  <div
+    id="age-verifier"
+    class="age-verifier"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="age-verifier-title"
+    data-age-verifier
+    data-min-age="{{ settings.age_verifier_minimum | default: 18 }}"
+  >
+    <div class="age-verifier__panel">
+      <h2 id="age-verifier-title" class="age-verifier__title">{{ 'age.title' | t }}</h2>
+      {%- assign minimum_age = settings.age_verifier_minimum | default: 18 -%}
+      <p class="age-verifier__text">{{ 'age.text' | t: age: minimum_age }}</p>
+      <div class="age-verifier__actions">
+        <button type="button" class="button button--primary" data-age-enter>
+          {{ 'age.enter' | t: age: minimum_age }}
+        </button>
+        <button type="button" class="button button--secondary" data-age-leave>
+          {{ 'age.leave' | t }}
+        </button>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

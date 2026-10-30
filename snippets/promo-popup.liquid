@@ -1,0 +1,50 @@
+{%- if settings.enable_promo_popup -%}
+  <div
+    id="promo-popup"
+    class="promo-popup"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="promo-popup-title"
+    data-promo-popup
+    data-delay="{{ settings.promo_popup_delay | default: 4 | times: 1000 }}"
+  >
+    <div class="promo-popup__overlay" data-promo-close></div>
+    <div class="promo-popup__panel">
+      <button type="button" class="promo-popup__close" data-promo-close aria-label="{{ 'popup.close' | t }}">&times;</button>
+      {%- if settings.promo_popup_image != blank -%}
+        {{
+          settings.promo_popup_image
+          | image_url: width: 800
+          | image_tag:
+            loading: 'lazy',
+            widths: '400, 800',
+            sizes: '360px',
+            class: 'promo-popup__image',
+            alt: settings.promo_popup_image.alt | default: settings.promo_popup_heading | escape
+        }}
+      {%- endif -%}
+      <h2 id="promo-popup-title" class="promo-popup__title">{{ settings.promo_popup_heading | escape }}</h2>
+      {%- if settings.promo_popup_text != blank -%}
+        <div class="promo-popup__text rte">{{ settings.promo_popup_text }}</div>
+      {%- endif -%}
+      {%- form 'customer', class: 'promo-popup__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter,promo-popup">
+        {%- if form.posted_successfully? -%}
+          <p class="promo-popup__success" role="status">{{ 'sections.newsletter.success' | t }}</p>
+        {%- else -%}
+          <label class="visually-hidden" for="PromoPopupEmail">{{ 'sections.newsletter.email_label' | t }}</label>
+          <input
+            type="email"
+            id="PromoPopupEmail"
+            name="contact[email]"
+            placeholder="{{ 'sections.newsletter.email_label' | t }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="button button--primary button--full">{{ settings.promo_popup_button | escape }}</button>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+{%- endif -%}

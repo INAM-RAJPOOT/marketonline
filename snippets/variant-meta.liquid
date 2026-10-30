@@ -1,0 +1,32 @@
+{% comment %}
+  Variant inventory, quantity rules, and volume pricing for the product form.
+  Accepts:
+  - product: {Object}
+  - section: {Object}
+{% endcomment %}
+<script type="application/json" id="variant-meta-{{ section.id }}">
+  [
+    {%- for variant in product.variants -%}
+      {
+        "id": {{ variant.id }},
+        "available": {{ variant.available | json }},
+        "inventory_quantity": {{ variant.inventory_quantity | default: 0 | json }},
+        "inventory_management": {{ variant.inventory_management | json }},
+        "inventory_policy": {{ variant.inventory_policy | json }},
+        "quantity_rule": {
+          "min": {{ variant.quantity_rule.min | default: 1 }},
+          "max": {% if variant.quantity_rule.max %}{{ variant.quantity_rule.max }}{% else %}null{% endif %},
+          "increment": {{ variant.quantity_rule.increment | default: 1 }}
+        },
+        "price_breaks": [
+          {%- for price_break in variant.quantity_price_breaks -%}
+            {
+              "min": {{ price_break.minimum_quantity }},
+              "price": {{ price_break.price | money | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+</script>

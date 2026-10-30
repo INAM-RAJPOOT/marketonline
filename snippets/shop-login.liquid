@@ -1,0 +1,8 @@
+{% comment %}
+  Sign in with Shop button. Renders when the shop supports it.
+{% endcomment %}
+{%- if shop.customer_accounts_enabled -%}
+  <div class="shop-login">
+    {{ shop | login_button }}
+  </div>
+{%- endif -%}

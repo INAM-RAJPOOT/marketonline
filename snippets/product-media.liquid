@@ -14,8 +14,13 @@
     {%- assign media_alt = media.alt | default: product.title | escape -%}
     {{
       media
-      | image_url: width: 1200
-      | image_tag: loading: media_loading, class: 'product__media-image', alt: media_alt, sizes: '(min-width: 990px) 50vw, 100vw'
+      | image_url: width: 2000
+      | image_tag:
+        loading: media_loading,
+        class: 'product__media-image',
+        alt: media_alt,
+        sizes: '(min-width: 990px) 50vw, 100vw',
+        widths: '400, 600, 800, 1000, 1400, 1800, 2000'
     }}
 
   {%- when 'video' -%}

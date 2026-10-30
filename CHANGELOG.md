@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.0 — 2026-10-30
+
+### Added
+- Storefront features for the theme checklist: quick view, recently viewed, stock counter, volume pricing, quick order, back-in-stock alerts, contact form, age verifier, promo popup, countdown, promo tiles, press coverage, lookbook hotspots, and before/after slider
+- Cart notes, gift wrapping, pre-order labeling, and a fuller in-store pickup list
+- Collection infinite scroll, swatch filters, and collection navigation
+- Product tabs for shipping, ingredients, nutrition, and usage, plus a size chart
+- Account menu with the shopify-account component and Sign in with Shop
+- Italian, German, and Spanish locales, and right-to-left layout for RTL languages
+- Image rollover, product badges, sticky header setting, back to top, and scroll animations
+
 ## 1.1.1 — 2026-10-28
 
 ### Changed

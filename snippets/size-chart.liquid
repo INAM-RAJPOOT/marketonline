@@ -1,0 +1,59 @@
+{% comment %}
+  Size chart dialog. Uses a page, an image, or a default size table.
+  Accepts:
+  - block: {Object}
+{% endcomment %}
+<div class="size-chart" {{ block.shopify_attributes }}>
+  <button type="button" class="size-chart__open" data-size-chart-open aria-controls="SizeChart-{{ block.id }}">
+    {{ 'products.size_chart' | t }}
+  </button>
+  <div id="SizeChart-{{ block.id }}" class="size-chart__dialog" hidden>
+    <div class="size-chart__overlay" data-size-chart-close></div>
+    <div class="size-chart__panel" role="dialog" aria-modal="true" aria-labelledby="SizeChartTitle-{{ block.id }}">
+      <div class="size-chart__header">
+        <h2 id="SizeChartTitle-{{ block.id }}" class="size-chart__title">
+          {%- if block.settings.heading != blank -%}
+            {{ block.settings.heading }}
+          {%- else -%}
+            {{ 'products.size_chart' | t }}
+          {%- endif -%}
+        </h2>
+        <button type="button" class="size-chart__close" data-size-chart-close aria-label="{{ 'accessibility.close' | t }}">&times;</button>
+      </div>
+      <div class="size-chart__body rte">
+        {%- if block.settings.page != blank and block.settings.page.content != blank -%}
+          {{ block.settings.page.content }}
+        {%- elsif block.settings.image != blank -%}
+          {{
+            block.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 800, 1200, 1600',
+              sizes: '(min-width: 750px) 640px, 100vw',
+              alt: block.settings.image.alt | default: block.settings.heading | escape
+          }}
+        {%- else -%}
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'products.size_chart_size' | t }}</th>
+                <th>{{ 'products.size_chart_chest' | t }}</th>
+                <th>{{ 'products.size_chart_waist' | t }}</th>
+                <th>{{ 'products.size_chart_hip' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>XS</td><td>81–86</td><td>66–71</td><td>86–91</td></tr>
+              <tr><td>S</td><td>86–91</td><td>71–76</td><td>91–97</td></tr>
+              <tr><td>M</td><td>97–102</td><td>81–86</td><td>102–107</td></tr>
+              <tr><td>L</td><td>107–112</td><td>91–97</td><td>112–117</td></tr>
+              <tr><td>XL</td><td>117–122</td><td>102–107</td><td>122–127</td></tr>
+            </tbody>
+          </table>
+          <p>{{ 'products.size_chart_note' | t }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>

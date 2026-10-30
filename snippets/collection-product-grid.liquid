@@ -25,6 +25,9 @@
       <nav class="collection__pagination" aria-label="{{ 'collections.pagination' | t }}">
         {{- paginate | default_pagination -}}
       </nav>
+      {%- if section.settings.enable_infinite_scroll and paginate.next -%}
+        <div data-infinite-sentinel data-next-url="{{ paginate.next.url }}" hidden></div>
+      {%- endif -%}
     {%- endif -%}
   {%- else -%}
     <div class="collection__empty">

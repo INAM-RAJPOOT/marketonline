@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "quick-order",
+      "settings": {
+        "heading": "Quick order",
+        "text": "<p>Add quantities for the products you need and send them to the cart in one step.</p>",
+        "products_to_show": 24
+      }
+    }
+  },
+  "order": ["main"]
+}

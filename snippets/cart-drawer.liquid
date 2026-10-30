@@ -106,6 +106,7 @@
             data-limit="{{ settings.cart_drawer_upsells_limit }}"
           ></div>
         {%- endif -%}
+        {% render 'cart-extras', context: 'drawer' %}
         <div class="cart-drawer__subtotal">
           <span>{{ 'cart.subtotal' | t }}</span>
           <span data-cart-subtotal>{{ cart.total_price | money }}</span>

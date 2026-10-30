@@ -95,6 +95,9 @@ const Cart = {
     if (cartBtn) {
       const template = window.theme?.strings?.cartCount || `Cart (${count} items)`;
       cartBtn.setAttribute('aria-label', template.replace('__COUNT__', count));
+      cartBtn.classList.remove('is-bumping');
+      void cartBtn.offsetWidth;
+      cartBtn.classList.add('is-bumping');
     }
   },
 
@@ -113,6 +116,8 @@ const Cart = {
     }
   }
 };
+
+window.Cart = Cart;
 
 // ============================================
 // Cart Drawer
@@ -203,6 +208,17 @@ class ProductForm {
     if (!this.jsonEl) return;
 
     this.product = JSON.parse(this.jsonEl.textContent);
+    this.variantMeta = {};
+    const metaEl = document.getElementById(`variant-meta-${this.sectionId}`);
+    if (metaEl) {
+      try {
+        JSON.parse(metaEl.textContent).forEach((item) => {
+          this.variantMeta[item.id] = item;
+        });
+      } catch (err) {
+        this.variantMeta = {};
+      }
+    }
     this.variantInput = form.querySelector('[name="id"]');
     this.submitBtn = form.querySelector('[type="submit"][name="add"]');
     this.priceEl = document.querySelector(`#price-${this.sectionId} [data-product-price]`);
@@ -234,7 +250,7 @@ class ProductForm {
   }
 
   bindEvents() {
-    this.form.querySelectorAll('.product__option-btn, .product__swatch').forEach((btn) => {
+    this.form.querySelectorAll('button.product__option-btn, button.product__swatch').forEach((btn) => {
       btn.addEventListener('click', () => {
         const value = btn.dataset.value;
         const group = btn.closest('.product__option-buttons, .product__swatches');
@@ -265,12 +281,17 @@ class ProductForm {
       btn.addEventListener('click', () => {
         const input = btn.closest('.product__quantity-wrapper')?.querySelector('.product__quantity-input');
         if (!input) return;
-        let val = parseInt(input.value, 10) || 1;
+        const min = parseInt(input.min, 10) || 1;
+        const step = parseInt(input.step, 10) || 1;
+        const max = parseInt(input.max, 10);
+        let val = parseInt(input.value, 10) || min;
         if (btn.dataset.action === 'increase') {
-          input.value = val + 1;
-        } else if (btn.dataset.action === 'decrease' && val > 1) {
-          input.value = val - 1;
+          const next = val + step;
+          if (!max || next <= max) input.value = next;
+        } else if (val - step >= min) {
+          input.value = val - step;
         }
+        input.dispatchEvent(new Event('change', { bubbles: true }));
       });
     });
 
@@ -299,11 +320,22 @@ class ProductForm {
       this.mediaGallery._mediaController.setActive(mediaId);
     }
 
+    const meta = this.variantMeta[variant.id] || {};
+    const buttonLabel = this.buttonLabel(variant, meta);
+    const qtyInput = this.form.querySelector('[name="quantity"]');
+    if (qtyInput && meta.quantity_rule) {
+      const rule = meta.quantity_rule;
+      qtyInput.min = rule.min || 1;
+      qtyInput.step = rule.increment || 1;
+      if (rule.max) qtyInput.max = rule.max;
+      else qtyInput.removeAttribute('max');
+      const current = parseInt(qtyInput.value, 10) || rule.min || 1;
+      if (current < (rule.min || 1)) qtyInput.value = rule.min || 1;
+    }
+
     if (this.submitBtn) {
       this.submitBtn.disabled = !variant.available;
-      this.submitBtn.textContent = variant.available
-        ? (window.theme?.strings?.addToCart || 'Add to cart')
-        : (window.theme?.strings?.soldOut || 'Sold out');
+      this.submitBtn.textContent = buttonLabel;
     }
 
     if (updateUrl) {
@@ -313,8 +345,15 @@ class ProductForm {
     }
 
     document.dispatchEvent(new CustomEvent('product:variant-change', {
-      detail: { variant, sectionId: this.sectionId }
+      detail: { variant, sectionId: this.sectionId, buttonLabel }
     }));
+  }
+
+  buttonLabel(variant, meta) {
+    if (!variant.available) return window.theme?.strings?.soldOut || 'Sold out';
+    const preorder = meta.inventory_management && meta.inventory_policy === 'continue' && Number(meta.inventory_quantity) <= 0;
+    if (preorder) return window.theme?.strings?.preorder || 'Pre-order';
+    return window.theme?.strings?.addToCart || 'Add to cart';
   }
 
   async onSubmit(e) {
@@ -509,6 +548,8 @@ class CollectionFilters {
         const cleanUrl = new URL(url, window.location.origin);
         window.history.pushState({}, '', cleanUrl.toString());
       }
+
+      document.dispatchEvent(new CustomEvent('collection:updated', { detail: { section: this.section } }));
     } catch (err) {
       console.error('Collection filter update failed', err);
     } finally {
@@ -908,23 +949,20 @@ class StickyAddToCart {
 
     document.addEventListener('product:variant-change', (e) => {
       if (e.detail.sectionId !== this.sectionId) return;
-      this.updateBar(e.detail.variant);
+      this.updateBar(e.detail.variant, e.detail.buttonLabel);
     });
   }
 
-  updateBar(variant) {
+  updateBar(variant, buttonLabel) {
     if (!variant) return;
     if (this.priceEl) {
-      const onSale = variant.compare_at_price && variant.compare_at_price > variant.price;
-      this.priceEl.textContent = onSale
-        ? formatMoney(variant.price)
-        : formatMoney(variant.price);
+      this.priceEl.textContent = formatMoney(variant.price);
     }
     if (this.button) {
       this.button.disabled = !variant.available;
-      this.button.textContent = variant.available
+      this.button.textContent = buttonLabel || (variant.available
         ? (window.theme?.strings?.addToCart || 'Add to cart')
-        : (window.theme?.strings?.soldOut || 'Sold out');
+        : (window.theme?.strings?.soldOut || 'Sold out'));
     }
   }
 

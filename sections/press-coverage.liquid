@@ -1,0 +1,102 @@
+<section class="press section-spacing color-scheme-{{ section.settings.color_scheme }}" id="shopify-section-{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="press__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <ul class="press__grid list-unstyled" role="list">
+      {%- for block in section.blocks -%}
+        <li class="press__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="press__link" {% if block.settings.link contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}>
+          {%- endif -%}
+            {%- if block.settings.logo != blank -%}
+              {{
+                block.settings.logo
+                | image_url: width: 400
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '120, 200, 320, 400',
+                  class: 'press__logo',
+                  alt: block.settings.publication | escape
+              }}
+            {%- elsif block.settings.publication != blank -%}
+              <p class="press__publication">{{ block.settings.publication }}</p>
+            {%- endif -%}
+            {%- if block.settings.quote != blank -%}
+              <blockquote class="press__quote">{{ block.settings.quote }}</blockquote>
+            {%- endif -%}
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Press coverage",
+  "tag": "section",
+  "class": "section-press",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "As seen in"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "1", "label": "Scheme 1" },
+        { "value": "2", "label": "Scheme 2" },
+        { "value": "3", "label": "Scheme 3" }
+      ],
+      "default": "2"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mention",
+      "name": "Press mention",
+      "settings": [
+        {
+          "type": "text",
+          "id": "publication",
+          "label": "Publication",
+          "default": "Publication"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "A short mention or pull quote from the article."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Article link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press coverage",
+      "blocks": [
+        { "type": "mention", "settings": { "publication": "Vogue", "quote": "A considered edit for everyday dressing." } },
+        { "type": "mention", "settings": { "publication": "Forbes", "quote": "Quality that holds up past the first season." } },
+        { "type": "mention", "settings": { "publication": "Wired", "quote": "A storefront that gets out of the way of the product." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

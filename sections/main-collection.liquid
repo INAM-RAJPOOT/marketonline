@@ -3,6 +3,7 @@
   class="collection section-spacing"
   id="shopify-section-{{ section.id }}"
   data-collection-section="{{ section.id }}"
+  {% if section.settings.enable_infinite_scroll %}data-infinite-scroll{% endif %}
 >
   <div class="page-width">
     {% render 'breadcrumbs' %}
@@ -77,6 +78,19 @@
       </div>
     </div>
 
+    {%- if section.settings.collection_menu != blank and section.settings.collection_menu.links.size > 0 -%}
+      <nav class="collection__nav" aria-label="{{ 'collections.browse' | t }}">
+        <p class="collection__nav-title">{{ 'collections.browse' | t }}</p>
+        <ul class="collection__nav-list">
+          {%- for link in section.settings.collection_menu.links -%}
+            <li>
+              <a href="{{ link.url }}" {% if link.active or link.child_active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
     <div class="collection__layout">
 
       {%- comment -%} Filters Sidebar {%- endcomment -%}
@@ -106,8 +120,17 @@
                   {%- when 'list' -%}
                     <ul class="collection__filter-list list-unstyled" role="list">
                       {%- for value in filter.values -%}
+                        {%- liquid
+                          assign filter_swatch = ''
+                          if value.swatch.image != blank
+                            assign filter_swatch_image = value.swatch.image | image_url: width: 80
+                            assign filter_swatch = 'image'
+                          elsif value.swatch.color != blank
+                            assign filter_swatch = 'color'
+                          endif
+                        -%}
                         <li class="collection__filter-item">
-                          <label class="collection__filter-label">
+                          <label class="collection__filter-label{% if filter_swatch != blank %} collection__filter-label--swatch{% endif %}">
                             <input
                               type="checkbox"
                               name="{{ value.param_name }}"
@@ -115,6 +138,11 @@
                               {% if value.active %}checked{% endif %}
                               class="collection__filter-checkbox"
                             >
+                            {%- if filter_swatch == 'image' -%}
+                              <span class="collection__swatch" style="background-image: url({{ filter_swatch_image }});"></span>
+                            {%- elsif filter_swatch == 'color' -%}
+                              <span class="collection__swatch" style="background-color: {{ value.swatch.color }};"></span>
+                            {%- endif -%}
                             <span class="collection__filter-value">{{ value.label }}</span>
                             <span class="collection__filter-count">({{ value.count }})</span>
                           </label>
@@ -546,6 +574,18 @@
       "step": 4,
       "label": "Products per page",
       "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_infinite_scroll",
+      "label": "Infinite scroll",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "collection_menu",
+      "label": "Collection navigation",
+      "info": "Sidebar links on collection pages"
     }
   ]
 }

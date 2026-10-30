@@ -1,0 +1,60 @@
+{% comment %}
+  Cart note and gift wrapping.
+  Accepts:
+  - context: {String} "drawer" or "page"
+{% endcomment %}
+{%- liquid
+  assign gift_product = settings.gift_wrap_product
+  assign gift_variant = gift_product.selected_or_first_available_variant
+  assign gift_selected = false
+  if cart.attributes['Gift wrap'] == 'Yes'
+    assign gift_selected = true
+  endif
+  if gift_variant
+    for item in cart.items
+      if item.variant_id == gift_variant.id
+        assign gift_selected = true
+      endif
+    endfor
+  endif
+-%}
+
+{%- if settings.enable_cart_note -%}
+  <div class="cart-extras__note">
+    <label for="CartNote-{{ context }}">{{ 'cart.note' | t }}</label>
+    <textarea
+      id="CartNote-{{ context }}"
+      name="note"
+      rows="3"
+      data-cart-note
+      {% if context == 'page' %}form="cart-form"{% endif %}
+      placeholder="{{ 'cart.note_placeholder' | t }}"
+    >{{ cart.note }}</textarea>
+  </div>
+{%- endif -%}
+
+{%- if settings.enable_gift_wrap -%}
+  <div class="cart-extras__gift">
+    <label class="cart-extras__gift-toggle">
+      <input
+        type="checkbox"
+        data-gift-wrap
+        {% if gift_variant %}data-variant-id="{{ gift_variant.id }}"{% endif %}
+        {% if gift_selected %}checked{% endif %}
+      >
+      <span>
+        {{ 'cart.gift_wrap' | t }}
+        {%- if gift_variant -%}
+          <span class="cart-extras__gift-price">{{ gift_variant.price | money }}</span>
+        {%- endif -%}
+      </span>
+    </label>
+    <label class="visually-hidden" for="GiftMessage-{{ context }}">{{ 'cart.gift_message' | t }}</label>
+    <textarea
+      id="GiftMessage-{{ context }}"
+      rows="2"
+      data-gift-message
+      placeholder="{{ 'cart.gift_message' | t }}"
+    >{{ cart.attributes['Gift message'] }}</textarea>
+  </div>
+{%- endif -%}

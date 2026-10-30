@@ -228,6 +228,118 @@
         "button_link": ""
       }
     },
+    "countdown": {
+      "type": "countdown",
+      "settings": {
+        "subheading": "Limited time",
+        "heading": "Flash sale ends soon",
+        "text": "<p>Add urgency to promotions, launches, and seasonal offers.</p>",
+        "end_date": "2026-12-31 23:59",
+        "button_label": "Shop the sale",
+        "color_scheme": "3"
+      }
+    },
+    "promo-tiles": {
+      "type": "promo-tiles",
+      "blocks": {
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "badge": "New",
+            "heading": "Just dropped",
+            "text": "Shop the latest arrivals."
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "badge": "Sale",
+            "heading": "Up to 40% off",
+            "text": "Seasonal styles, limited time."
+          }
+        },
+        "tile-3": {
+          "type": "tile",
+          "settings": {
+            "badge": "Bundle",
+            "heading": "Buy more, save more",
+            "text": "Volume pricing on selected lines."
+          }
+        }
+      },
+      "block_order": ["tile-1", "tile-2", "tile-3"],
+      "settings": {
+        "heading": "This week's offers",
+        "columns": 3
+      }
+    },
+    "press": {
+      "type": "press-coverage",
+      "blocks": {
+        "press-1": {
+          "type": "mention",
+          "settings": {
+            "publication": "Vogue",
+            "quote": "A considered edit for everyday dressing."
+          }
+        },
+        "press-2": {
+          "type": "mention",
+          "settings": {
+            "publication": "Forbes",
+            "quote": "Quality that holds up past the first season."
+          }
+        },
+        "press-3": {
+          "type": "mention",
+          "settings": {
+            "publication": "Wired",
+            "quote": "A storefront that gets out of the way of the product."
+          }
+        }
+      },
+      "block_order": ["press-1", "press-2", "press-3"],
+      "settings": {
+        "heading": "As seen in",
+        "color_scheme": "2"
+      }
+    },
+    "before-after": {
+      "type": "before-after",
+      "settings": {
+        "subheading": "See the difference",
+        "heading": "Before and after",
+        "text": "<p>Drag the slider to compare two images.</p>",
+        "before_label": "Before",
+        "after_label": "After"
+      }
+    },
+    "lookbook": {
+      "type": "image-hotspots",
+      "blocks": {
+        "hotspot-1": {
+          "type": "hotspot",
+          "settings": {
+            "horizontal": 32,
+            "vertical": 40,
+            "heading": "Jacket"
+          }
+        },
+        "hotspot-2": {
+          "type": "hotspot",
+          "settings": {
+            "horizontal": 62,
+            "vertical": 68,
+            "heading": "Sneakers"
+          }
+        }
+      },
+      "block_order": ["hotspot-1", "hotspot-2"],
+      "settings": {
+        "heading": "Shop the look",
+        "text": "<p>Tag products or details on a lookbook image. Tap a hotspot to open it.</p>"
+      }
+    },
     "newsletter": {
       "type": "newsletter",
       "settings": {
@@ -248,6 +360,11 @@
     "image-with-text",
     "testimonials",
     "rich-text",
+    "countdown",
+    "promo-tiles",
+    "press",
+    "before-after",
+    "lookbook",
     "newsletter"
   ]
 }

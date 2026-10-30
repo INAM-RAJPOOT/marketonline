@@ -4,18 +4,21 @@ A modern Shopify Online Store 2.0 theme with conversion-focused features, custom
 
 ## Features
 
-- **Cart drawer** with AJAX add-to-cart and upsells
-- **Quick add** on collection cards
-- **Search modal** with predictive search
-- **Sticky add-to-cart** on product pages
-- **Mega menu** with optional promo blocks
-- **AJAX collection filters**
-- **Product media gallery** with zoom
-- **Wishlist** (localStorage)
-- **Product reviews** (Shopify metafields, Judge.me, or app blocks)
-- **Customer accounts** (Classic accounts)
-- **Localization** (country + language selectors)
-- **Marketing sections:** hero carousel, FAQ, testimonials, featured blog, logo list, and more
+- **Cart drawer** with notes, gift wrap, and cross-sell upsells
+- **Quick add** and **quick view** on collection cards
+- **Predictive search**
+- **Sticky header** and **sticky add-to-cart**
+- **Mega menu** with in-menu promos
+- **Collection filters**, swatches, sidebar navigation, and infinite scroll
+- **Product gallery** with high-resolution images, video, zoom, and hover rollover
+- **Product details:** stock counter, volume pricing, pre-order, size chart, tabs, back-in-stock alerts
+- **Recently viewed** and complementary products
+- **Wishlist** and product reviews
+- **Customer accounts** with account menu and Sign in with Shop
+- **Storefront locales:** English, French, Italian, German, and Spanish, plus right-to-left layout
+- **Promotions:** countdown, promo tiles, promo popup, press mentions, lookbook hotspots, before/after slider
+- **Quick order list** and customizable contact form
+- **Age verifier**, back to top, and motion that respects reduced-motion settings
 
 ## Requirements
 
@@ -81,7 +84,7 @@ templates/    JSON templates
 
 ## Version
 
-See [CHANGELOG.md](./CHANGELOG.md). Current version: **1.1.1**.
+See [CHANGELOG.md](./CHANGELOG.md). Current version: **1.2.0**.
 
 ## License
 

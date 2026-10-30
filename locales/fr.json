@@ -51,7 +51,11 @@
     "shipping_at_checkout": "Livraison calculée à la caisse.",
     "increase": "Augmenter la quantité",
     "decrease": "Diminuer la quantité",
-    "upsells_heading": "Vous aimerez aussi"
+    "upsells_heading": "Vous aimerez aussi",
+    "note": "Note de commande",
+    "note_placeholder": "Ajouter une note pour le vendeur",
+    "gift_wrap": "Ajouter un emballage cadeau",
+    "gift_message": "Message cadeau"
   },
   "customers": {
     "login": {
@@ -160,7 +164,8 @@
       "button": "Voir tous les produits"
     },
     "min_price": "Prix min.",
-    "max_price": "Prix max."
+    "max_price": "Prix max.",
+    "browse": "Parcourir"
   },
   "general": {
     "search": {
@@ -171,7 +176,9 @@
       "home": "Accueil"
     },
     "page": "Page {{ number }}",
-    "error": "Une erreur s'est produite. Veuillez réessayer."
+    "error": "Une erreur s'est produite. Veuillez réessayer.",
+    "back_to_top": "Haut de page",
+    "before_after": "Comparer avant et après"
   },
   "localization": {
     "country_label": "Pays/région",
@@ -215,7 +222,67 @@
     "shipping_policy_html": "<a href=\"{{ link }}\">Livraison</a> calculée à la caisse.",
     "media": {
       "gallery": "Galerie produit"
+    },
+    "preorder": "Précommander",
+    "new": "Nouveau",
+    "view_details": "Voir tous les détails",
+    "price_label": "Prix",
+    "stock_available": "En stock",
+    "in_stock": "{{ count }} en stock",
+    "low_stock": "Plus que {{ count }}",
+    "back_in_stock": "Prévenez-moi du retour en stock",
+    "back_in_stock_email": "E-mail",
+    "back_in_stock_submit": "Me prévenir",
+    "back_in_stock_success": "Nous vous écrirons lorsque ce produit sera disponible.",
+    "back_in_stock_body": "Prévenez-moi lorsque {{ product }} — {{ variant }} sera de nouveau en stock.",
+    "volume_pricing": "Prix par quantité",
+    "volume_at_least": "{{ count }}+ pour {{ price }}",
+    "quantity_min": "Minimum de {{ count }}",
+    "quantity_max": "Maximum de {{ count }}",
+    "quantity_increment": "Vendu par {{ count }}",
+    "size_chart": "Guide des tailles",
+    "size_chart_size": "Taille",
+    "size_chart_chest": "Poitrine (cm)",
+    "size_chart_waist": "Taille (cm)",
+    "size_chart_hip": "Hanches (cm)",
+    "size_chart_note": "Les mesures sont approximatives. Remplacez ce tableau par votre page ou image.",
+    "pickup_heading": "Retrait en magasin",
+    "quick_view": "Aperçu rapide",
+    "tabs": {
+      "description": "Description",
+      "shipping": "Livraison",
+      "ingredients": "Ingrédients",
+      "usage": "Utilisation"
     }
+  },
+  "age": {
+    "title": "Vérification de l'âge",
+    "text": "Vous devez avoir {{ age }} ans ou plus pour entrer dans cette boutique.",
+    "enter": "J'ai {{ age }} ans ou plus",
+    "leave": "Quitter"
+  },
+  "popup": {
+    "close": "Fermer"
+  },
+  "quick_order": {
+    "add_selected": "Ajouter la sélection au panier",
+    "empty": "Choisissez une collection pour cette liste de commande rapide dans l'éditeur de thème.",
+    "added": "Les produits sélectionnés ont été ajoutés au panier.",
+    "choose": "Saisissez une quantité pour au moins un produit."
+  },
+  "contact": {
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "message": "Message",
+    "success": "Merci de nous avoir contactés. Nous vous répondrons bientôt."
+  },
+  "countdown": {
+    "days": "Jours",
+    "hours": "Heures",
+    "minutes": "Minutes",
+    "seconds": "Secondes",
+    "ended": "Cette offre est terminée"
   },
   "password": {
     "title": "Cette boutique est privée",

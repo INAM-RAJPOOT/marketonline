@@ -9,6 +9,7 @@
       {%- comment -%} Product Info {%- endcomment -%}
       <div class="product__info">
         <script type="application/json" id="product-json-{{ section.id }}">{{ product | json }}</script>
+        {% render 'variant-meta', product: product, section: section %}
 
         {%- form 'product', product, id: 'product-form', novalidate: 'novalidate', data-product-form: '', data-section-id: section.id -%}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
@@ -63,39 +64,86 @@
                 <div class="product__variants" {{ block.shopify_attributes }}>
                   {%- unless product.has_only_default_variant -%}
                     {%- for option in product.options_with_values -%}
+                      {%- liquid
+                        assign option_handle = option.name | handleize
+                        assign use_swatches = false
+                        if option_handle == 'color' or option_handle == 'colour' or option_handle == 'couleur' or option_handle == 'farbe' or option_handle == 'colore'
+                          assign use_swatches = true
+                        endif
+                        for value in option.values
+                          if value.swatch != blank
+                            assign use_swatches = true
+                          endif
+                        endfor
+                      -%}
                       <div class="product__option">
                         <label class="product__option-label" for="option-{{ section.id }}-{{ forloop.index0 }}" data-option-name="{{ option.name | handleize }}">
                           {{ option.name }}:
                           <span class="product__option-value" id="selected-{{ option.name | handleize }}">{{ option.selected_value }}</span>
                         </label>
-                        {%- if option.name == 'Color' or option.name == 'Colour' -%}
+                        {%- if use_swatches -%}
                           <div class="product__swatches" role="group" aria-label="{{ option.name }}">
                             {%- for value in option.values -%}
-                              <button
-                                type="button"
-                                class="product__swatch {% if value == option.selected_value %}product__swatch--active{% endif %}"
-                                data-option-index="{{ forloop.parentloop.index0 }}"
-                                data-value="{{ value | escape }}"
-                                aria-label="{{ value | escape }}"
-                                style="background-color: {{ value | downcase }};"
-                                title="{{ value | escape }}"
-                              >
-                                <span class="visually-hidden">{{ value }}</span>
-                              </button>
+                              {%- liquid
+                                assign swatch_style = ''
+                                if value.swatch.image != blank
+                                  assign swatch_image = value.swatch.image | image_url: width: 80
+                                  assign swatch_style = 'background-image: url(' | append: swatch_image | append: '); background-size: cover;'
+                                elsif value.swatch.color != blank
+                                  assign swatch_style = 'background-color: ' | append: value.swatch.color | append: ';'
+                                else
+                                  assign swatch_color = value | downcase
+                                  assign swatch_style = 'background-color: ' | append: swatch_color | append: ';'
+                                endif
+                                assign swatch_selected = false
+                                if value.selected or value == option.selected_value
+                                  assign swatch_selected = true
+                                endif
+                              -%}
+                              {%- if value.product_url != blank -%}
+                                <a
+                                  href="{{ value.product_url }}"
+                                  class="product__swatch{% if swatch_selected %} product__swatch--active{% endif %}"
+                                  style="{{ swatch_style }}"
+                                  title="{{ value | escape }}"
+                                  aria-label="{{ value | escape }}"
+                                ><span class="visually-hidden">{{ value }}</span></a>
+                              {%- else -%}
+                                <button
+                                  type="button"
+                                  class="product__swatch{% if swatch_selected %} product__swatch--active{% endif %}"
+                                  data-option-index="{{ forloop.parentloop.index0 }}"
+                                  data-value="{{ value | escape }}"
+                                  aria-label="{{ value | escape }}"
+                                  style="{{ swatch_style }}"
+                                  title="{{ value | escape }}"
+                                ><span class="visually-hidden">{{ value }}</span></button>
+                              {%- endif -%}
                             {%- endfor -%}
                           </div>
                         {%- else -%}
                           <div class="product__option-buttons" role="group" aria-label="{{ option.name }}">
                             {%- for value in option.values -%}
-                              <button
-                                type="button"
-                                class="product__option-btn {% if value == option.selected_value %}product__option-btn--active{% endif %}"
-                                data-option-index="{{ forloop.parentloop.index0 }}"
-                                data-value="{{ value | escape }}"
-                                aria-label="{{ option.name }}: {{ value | escape }}"
-                              >
-                                {{ value }}
-                              </button>
+                              {%- liquid
+                                assign option_selected = false
+                                if value.selected or value == option.selected_value
+                                  assign option_selected = true
+                                endif
+                              -%}
+                              {%- if value.product_url != blank -%}
+                                <a
+                                  href="{{ value.product_url }}"
+                                  class="product__option-btn{% if option_selected %} product__option-btn--active{% endif %}"
+                                >{{ value }}</a>
+                              {%- else -%}
+                                <button
+                                  type="button"
+                                  class="product__option-btn{% if option_selected %} product__option-btn--active{% endif %}"
+                                  data-option-index="{{ forloop.parentloop.index0 }}"
+                                  data-value="{{ value | escape }}"
+                                  aria-label="{{ option.name }}: {{ value | escape }}"
+                                >{{ value }}</button>
+                              {%- endif -%}
                             {%- endfor -%}
                           </div>
                         {%- endif -%}
@@ -111,12 +159,19 @@
                     <button type="button" class="product__quantity-btn" aria-label="{{ 'cart.decrease' | t }}" data-action="decrease">
                       <span aria-hidden="true">&#8722;</span>
                     </button>
+                    {%- liquid
+                      assign qty_rule = product.selected_or_first_available_variant.quantity_rule
+                      assign qty_min = qty_rule.min | default: 1
+                      assign qty_step = qty_rule.increment | default: 1
+                    -%}
                     <input
                       type="number"
                       id="quantity-{{ section.id }}"
                       name="quantity"
-                      value="1"
-                      min="1"
+                      value="{{ qty_min }}"
+                      min="{{ qty_min }}"
+                      step="{{ qty_step }}"
+                      {% if qty_rule.max %}max="{{ qty_rule.max }}"{% endif %}
                       class="product__quantity-input"
                       aria-label="{{ 'products.quantity' | t }}"
                     >
@@ -131,18 +186,42 @@
                   {% render 'wishlist-button', product_handle: product.handle, class: 'wishlist-button--product', show_label: true %}
                 </div>
 
+              {%- when 'stock_counter' -%}
+                {% render 'stock-counter', product: product, block: block %}
+
+              {%- when 'volume_pricing' -%}
+                {% render 'volume-pricing', product: product, block: block %}
+
+              {%- when 'size_chart' -%}
+                {% render 'size-chart', block: block %}
+
+              {%- when 'back_in_stock' -%}
+                {% render 'back-in-stock', product: product, block: block %}
+
+              {%- when 'product_tabs' -%}
+                {% render 'product-tabs', product: product, block: block %}
+
               {%- when 'buy_buttons' -%}
+                {%- liquid
+                  assign current_variant = product.selected_or_first_available_variant
+                  assign is_preorder = false
+                  if current_variant.available and current_variant.inventory_management != blank and current_variant.inventory_policy == 'continue' and current_variant.inventory_quantity <= 0
+                    assign is_preorder = true
+                  endif
+                -%}
                 <div class="product__buy-buttons" {{ block.shopify_attributes }}>
                   <button
                     type="submit"
                     name="add"
                     class="button button--primary button--full"
-                    {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                    {% if current_variant.available == false %}disabled{% endif %}
                   >
-                    {%- if product.selected_or_first_available_variant.available -%}
-                      {{ 'products.add_to_cart' | t }}
-                    {%- else -%}
+                    {%- if current_variant.available == false -%}
                       {{ 'products.sold_out' | t }}
+                    {%- elsif is_preorder -%}
+                      {{ 'products.preorder' | t }}
+                    {%- else -%}
+                      {{ 'products.add_to_cart' | t }}
                     {%- endif -%}
                   </button>
                   {%- if block.settings.show_dynamic_checkout -%}
@@ -173,16 +252,20 @@
           {%- if section.settings.show_pickup_availability -%}
             {%- assign current_variant = product.selected_or_first_available_variant -%}
             {%- assign pick_up_availabilities = current_variant.store_availabilities | where: 'pick_up_enabled', true -%}
-            {%- if pick_up_availabilities.size > 0 -%}
-              {%- assign closest_location = pick_up_availabilities.first -%}
-              <div class="pickup-availability-preview" role="status">
-                {%- if closest_location.available -%}
-                  <p>{{ 'products.pickup_available_html' | t: location: closest_location.location.name, pickup_time: closest_location.pick_up_time }}</p>
-                {%- else -%}
-                  <p>{{ 'products.pickup_unavailable_html' | t: location: closest_location.location.name }}</p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
+            <div class="pickup-availability" data-pickup role="status">
+              {%- if pick_up_availabilities.size > 0 -%}
+                <p class="pickup-availability__heading">{{ 'products.pickup_heading' | t }}</p>
+                {%- for location in pick_up_availabilities -%}
+                  <p class="pickup-availability__item">
+                    {%- if location.available -%}
+                      {{ 'products.pickup_available_html' | t: location: location.location.name, pickup_time: location.pick_up_time }}
+                    {%- else -%}
+                      {{ 'products.pickup_unavailable_html' | t: location: location.location.name }}
+                    {%- endif -%}
+                  </p>
+                {%- endfor -%}
+              {%- endif -%}
+            </div>
           {%- endif -%}
 
         {%- endform -%}
@@ -213,10 +296,19 @@
           data-sticky-atc-submit
           {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
         >
-          {%- if product.selected_or_first_available_variant.available -%}
-            {{ 'products.add_to_cart' | t }}
-          {%- else -%}
+          {%- liquid
+            assign sticky_variant = product.selected_or_first_available_variant
+            assign sticky_preorder = false
+            if sticky_variant.available and sticky_variant.inventory_management != blank and sticky_variant.inventory_policy == 'continue' and sticky_variant.inventory_quantity <= 0
+              assign sticky_preorder = true
+            endif
+          -%}
+          {%- if sticky_variant.available == false -%}
             {{ 'products.sold_out' | t }}
+          {%- elsif sticky_preorder -%}
+            {{ 'products.preorder' | t }}
+          {%- else -%}
+            {{ 'products.add_to_cart' | t }}
           {%- endif -%}
         </button>
       </div>
@@ -674,6 +766,113 @@
       "type": "quantity_selector",
       "name": "Quantity selector",
       "limit": 1
+    },
+    {
+      "type": "stock_counter",
+      "name": "Stock counter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "threshold",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "label": "Low stock threshold",
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "show_count",
+          "label": "Show inventory count",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "volume_pricing",
+      "name": "Quantity pricing",
+      "limit": 1
+    },
+    {
+      "type": "size_chart",
+      "name": "Size chart",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Size chart"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Size chart page"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Size chart image"
+        }
+      ]
+    },
+    {
+      "type": "back_in_stock",
+      "name": "Back in stock",
+      "limit": 1
+    },
+    {
+      "type": "product_tabs",
+      "name": "Product tabs",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_description",
+          "label": "Description tab",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_shipping",
+          "label": "Shipping and delivery",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "shipping",
+          "label": "Shipping text",
+          "info": "Used when the product has no custom.shipping metafield.",
+          "default": "<p>Shipping options and an estimated delivery time are confirmed at checkout.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_ingredients",
+          "label": "Ingredients or nutrition",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "ingredients",
+          "label": "Ingredients text",
+          "info": "Used when the product has no custom.ingredients metafield. Nutrition can also come from custom.nutrition.",
+          "default": "<p>Ingredients and nutritional details for this product appear here.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_usage",
+          "label": "Usage information",
+          "default": true
+        },
+        {
+          "type": "richtext",
+          "id": "usage",
+          "label": "Usage text",
+          "info": "Used when the product has no custom.usage metafield.",
+          "default": "<p>Use as directed on the packaging. Contact us if you need help with this product.</p>"
+        }
+      ]
     },
     {
       "type": "wishlist",

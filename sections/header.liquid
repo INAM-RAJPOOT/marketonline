@@ -1,4 +1,4 @@
-<header class="header color-scheme-1" id="shopify-section-header">
+<header class="header color-scheme-1{% if section.settings.enable_sticky_header %} header--sticky{% endif %}" id="shopify-section-header">
   <div class="header__inner page-width">
 
     {%- comment -%} Logo {%- endcomment -%}
@@ -116,17 +116,33 @@
         </a>
       {%- endif -%}
 
-      {%- comment -%} Account {%- endcomment -%}
+      {%- comment -%} Account menu and Sign in with Shop {%- endcomment -%}
       {%- if shop.customer_accounts_enabled -%}
-        <a
-          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="header__icon header__icon--account"
-          aria-label="{{ 'customers.account.title' | t }}"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20">
-            <path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 2a3 3 0 100 6 3 3 0 000-6zm0 11c-5 0-8 2.5-8 4v1h16v-1c0-1.5-3-4-8-4z" fill="currentColor"/>
-          </svg>
-        </a>
+        <div class="header__account">
+          <shopify-account menu="{{ section.settings.customer_account_menu }}">
+            <a
+              href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+              class="header__icon header__icon--account"
+              aria-label="{{ 'customers.account.title' | t }}"
+              slot="signed-out-avatar"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20">
+                <path d="M12 2a5 5 0 110 10A5 5 0 0112 2zm0 2a3 3 0 100 6 3 3 0 000-6zm0 11c-5 0-8 2.5-8 4v1h16v-1c0-1.5-3-4-8-4z" fill="currentColor"/>
+              </svg>
+            </a>
+          </shopify-account>
+          <div class="header__account-menu">
+            {%- if customer -%}
+              <a href="{{ routes.account_url }}">{{ 'customers.account.title' | t }}</a>
+              <a href="{{ routes.account_addresses_url }}">{{ 'customers.addresses.title' | t }}</a>
+              <a href="{{ routes.account_logout_url }}">{{ 'customers.account.log_out' | t }}</a>
+            {%- else -%}
+              <a href="{{ routes.account_login_url }}">{{ 'customers.login.submit' | t }}</a>
+              <a href="{{ routes.account_register_url }}">{{ 'customers.login.create_account' | t }}</a>
+              {% render 'shop-login' %}
+            {%- endif -%}
+          </div>
+        </div>
       {%- endif -%}
 
       {%- comment -%} Cart {%- endcomment -%}
@@ -186,11 +202,14 @@
 
 <style>
   .header {
+    background-color: rgb(var(--color-base-background-1));
+    border-bottom: 1px solid rgba(var(--color-base-text-1), 0.1);
+  }
+
+  .header--sticky {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgb(var(--color-base-background-1));
-    border-bottom: 1px solid rgba(var(--color-base-text-1), 0.1);
   }
 
   .header__inner {
@@ -529,6 +548,19 @@
       ],
       "default": "mega",
       "label": "Desktop navigation type"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_header",
+      "label": "Sticky header",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "Customer account menu",
+      "default": "customer-account-main-menu",
+      "info": "Used by the shopify-account component for new customer accounts."
     }
   ],
   "blocks": [

@@ -2,7 +2,10 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "enable_infinite_scroll": true,
+        "collection_menu": "main-menu"
+      }
     }
   },
   "order": ["main"]

@@ -9,6 +9,15 @@
 {%- liquid
   assign show_quick_add = show_quick_add | default: true, allow_false: true
   assign card_product = product
+  assign secondary_media = card_product.media[1]
+  assign custom_badge = card_product.metafields.custom.badge.value | default: card_product.metafields.custom.badge
+  assign created_stamp = card_product.created_at | date: '%s' | plus: 0
+  assign now_stamp = 'now' | date: '%s' | plus: 0
+  assign age_seconds = now_stamp | minus: created_stamp
+  assign is_new = false
+  if age_seconds < 1209600
+    assign is_new = true
+  endif
 -%}
 
 <div class="product-card">
@@ -19,22 +28,51 @@
         {%- if card_product.featured_media -%}
           {{
             card_product.featured_media
-            | image_url: width: 600
+            | image_url: width: 1600
             | image_tag:
               loading: 'lazy',
               sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
-              widths: '165, 360, 535, 750',
+              widths: '360, 540, 720, 1000, 1400, 1600',
               class: 'product-card__image',
               alt: card_product.featured_media.alt | default: card_product.title | escape
           }}
+          {%- if secondary_media and secondary_media.media_type == 'image' -%}
+            {{
+              secondary_media
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+                widths: '360, 540, 720, 1000, 1400, 1600',
+                class: 'product-card__image product-card__image--secondary',
+                alt: ''
+            }}
+          {%- endif -%}
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder-svg' }}
         {%- endif -%}
-        {%- if card_product.compare_at_price > card_product.price -%}
-          <span class="product-card__badge">{{ 'products.sale' | t }}</span>
-        {%- endif -%}
+        <div class="product-card__badges">
+          {%- if card_product.available == false -%}
+            <span class="product-card__badge product-card__badge--sold">{{ 'products.sold_out' | t }}</span>
+          {%- elsif card_product.compare_at_price > card_product.price -%}
+            <span class="product-card__badge">{{ 'products.sale' | t }}</span>
+          {%- endif -%}
+          {%- if custom_badge != blank -%}
+            <span class="product-card__badge product-card__badge--custom">{{ custom_badge }}</span>
+          {%- elsif is_new and card_product.available -%}
+            <span class="product-card__badge product-card__badge--new">{{ 'products.new' | t }}</span>
+          {%- endif -%}
+        </div>
       </div>
     </a>
+    <button
+      type="button"
+      class="product-card__quick-view"
+      data-quick-view
+      data-product-handle="{{ card_product.handle }}"
+    >
+      {{ 'products.quick_view' | t }}
+    </button>
 
     {%- if show_quick_add -%}
       {%- if card_product.has_only_default_variant -%}
@@ -73,6 +111,41 @@
     </h3>
     {% render 'product-reviews-display', product: card_product, context: 'card', size: 'sm', link_to_reviews: true, class: 'product-card__rating' %}
     {% render 'price', product: card_product, class: 'product-card__price', show_badge: false %}
+    {%- for option in card_product.options_with_values -%}
+      {%- liquid
+        assign option_handle = option.name | handleize
+        assign show_option_swatches = false
+        if option_handle == 'color' or option_handle == 'colour' or option_handle == 'couleur' or option_handle == 'farbe' or option_handle == 'colore'
+          assign show_option_swatches = true
+        endif
+        for value in option.values
+          if value.swatch != blank
+            assign show_option_swatches = true
+          endif
+        endfor
+      -%}
+      {%- if show_option_swatches -%}
+        <div class="product-card__options" aria-label="{{ option.name }}">
+          {%- for value in option.values limit: 5 -%}
+            {%- liquid
+              assign card_swatch = ''
+              if value.swatch.image != blank
+                assign card_swatch_image = value.swatch.image | image_url: width: 40
+                assign card_swatch = 'background-image: url(' | append: card_swatch_image | append: ');'
+              elsif value.swatch.color != blank
+                assign card_swatch = 'background-color: ' | append: value.swatch.color | append: ';'
+              else
+                assign card_swatch = 'background-color: ' | append: value | downcase | append: ';'
+              endif
+            -%}
+            <span class="product-card__swatch" style="{{ card_swatch }}" title="{{ value | escape }}"></span>
+          {%- endfor -%}
+          {%- if option.values.size > 5 -%}
+            <span class="product-card__more-options">+{{ option.values.size | minus: 5 }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
     {%- if card_product.unit_price_measurement -%}
       <div class="product-card__unit-price">
         {{ card_product.unit_price | money }}/{{ card_product.unit_price_measurement.reference_unit }}
